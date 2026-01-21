@@ -5,1092 +5,499 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TS Scorecard Dashboard</title>
     <style>
-        :root {
-            --hyland-grey: #F4F6FE;
-            --hyland-dark-blue: #191F5E;
-            --hyland-teal: #13EAC1;
-            --hyland-purple: #6E33FF;
-            --hyland-blue: #52A1FF;
-            --hyland-yellow: #F1CB61;
-            --hyland-dark-blue-60: #75799E;
-            --hyland-teal-60: #70F2DA;
-            --hyland-teal-30: #B9F9EC;
-            --hyland-purple-60: #A785FF;
-            --hyland-yellow-30: #FBEFD0;
-            --green-bg: #D1FAE5;
-            --green-text: #065F46;
-            --yellow-bg: #FEF3C7;
-            --yellow-text: #92400E;
-            --red-bg: #FEE2E2;
-            --red-text: #991B1B;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--hyland-grey);
-            min-height: 100vh;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F4F6FE; }
+        
         /* Header */
-        .header {
-            background-color: var(--hyland-dark-blue);
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .version-badge {
-            background-color: var(--hyland-teal);
-            color: var(--hyland-dark-blue);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            color: white;
-            font-size: 12px;
-        }
-
-        .header-right span {
-            opacity: 0.8;
-        }
-
-        .period-badge {
-            background-color: var(--hyland-dark-blue-60);
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-
+        .header { background: #191F5E; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: white; font-size: 18px; }
+        .header span { color: rgba(255,255,255,0.7); font-size: 12px; }
+        .badge { background: #13EAC1; color: #191F5E; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 12px; }
+        
         /* Tabs */
-        .tabs {
-            background-color: white;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-        }
-
-        .tab {
-            padding: 14px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7280;
-            cursor: pointer;
-            border: none;
-            background: none;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .tab:hover {
-            color: var(--hyland-dark-blue);
-            background-color: #f9fafb;
-        }
-
-        .tab.active {
-            color: var(--hyland-dark-blue);
-            border-bottom-color: var(--hyland-teal);
-        }
-
+        .tabs { background: white; border-bottom: 1px solid #e5e7eb; display: flex; padding: 0 16px; }
+        .tab { padding: 14px 20px; font-size: 14px; color: #6b7280; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; }
+        .tab:hover { color: #191F5E; background: #f9fafb; }
+        .tab.active { color: #191F5E; border-bottom-color: #13EAC1; font-weight: 500; }
+        
         /* Content */
-        .content {
-            padding: 24px;
-            display: none;
-        }
-
-        .content.active {
-            display: block;
-        }
-
+        .page { display: none; padding: 24px; }
+        .page.active { display: block; }
+        
         /* KPI Cards */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .kpi-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid;
-        }
-
-        .kpi-card.teal { border-left-color: var(--hyland-teal); }
-        .kpi-card.purple { border-left-color: var(--hyland-purple); }
-        .kpi-card.blue { border-left-color: var(--hyland-blue); }
-        .kpi-card.yellow { border-left-color: var(--hyland-yellow); }
-
-        .kpi-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #6b7280;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .kpi-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--hyland-dark-blue);
-            margin-bottom: 4px;
-        }
-
-        .kpi-target {
-            font-size: 12px;
-            color: #9ca3af;
-        }
-
-        .kpi-trend {
-            font-size: 12px;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        .kpi-trend.positive { color: var(--green-text); }
-        .kpi-trend.negative { color: var(--red-text); }
-
-        /* Card Grid */
-        .card-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .card-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .card-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--hyland-dark-blue);
-            margin-bottom: 16px;
-        }
-
-        /* Mini Chart (Sparkline) */
-        .sparkline {
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            height: 50px;
-        }
-
-        .sparkline-bar {
-            flex: 1;
-            border-radius: 3px 3px 0 0;
-            transition: height 0.3s;
-        }
-
-        .sparkline-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-        }
-
-        .sparkline-label {
-            font-size: 10px;
-            color: #9ca3af;
-        }
-
-        /* Trend Grid */
-        .trend-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .trend-item {
-            text-align: center;
-        }
-
-        .trend-item-label {
-            font-size: 11px;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
-
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .kpi { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid; }
+        .kpi.teal { border-color: #13EAC1; }
+        .kpi.purple { border-color: #6E33FF; }
+        .kpi.blue { border-color: #52A1FF; }
+        .kpi.yellow { border-color: #F1CB61; }
+        .kpi-label { font-size: 11px; text-transform: uppercase; color: #6b7280; font-weight: 600; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 32px; font-weight: bold; color: #191F5E; margin: 8px 0 4px; }
+        .kpi-target { font-size: 12px; color: #9ca3af; }
+        .kpi-trend { font-size: 12px; margin-top: 8px; font-weight: 500; }
+        .kpi-trend.up { color: #065F46; }
+        .kpi-trend.down { color: #991B1B; }
+        
+        /* Cards */
+        .row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .card-title { font-size: 14px; font-weight: 600; color: #191F5E; margin-bottom: 16px; }
+        
         /* Progress Bars */
-        .progress-item {
-            margin-bottom: 16px;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-
-        .progress-label {
-            font-size: 12px;
-            color: #4b5563;
-        }
-
-        .progress-value {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--hyland-dark-blue);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background-color: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        /* Stats Row */
-        .stats-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 16px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--hyland-dark-blue);
-        }
-
-        .stat-value.teal { color: var(--hyland-teal); }
-        .stat-value.blue { color: var(--hyland-blue); }
-        .stat-value.purple { color: var(--hyland-purple); }
-
-        .stat-label {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
-
+        .progress-item { margin-bottom: 14px; }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+        .progress-label { color: #4b5563; }
+        .progress-value { font-weight: 600; color: #191F5E; }
+        .progress-track { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; }
+        
+        /* Sparkline */
+        .spark { display: flex; align-items: flex-end; gap: 6px; height: 50px; }
+        .spark-bar { flex: 1; border-radius: 3px 3px 0 0; min-height: 4px; }
+        .spark-labels { display: flex; gap: 6px; margin-top: 8px; }
+        .spark-labels span { flex: 1; font-size: 10px; color: #9ca3af; text-align: center; }
+        
+        /* Stats */
+        .stats { display: flex; justify-content: space-around; padding: 16px 0; }
+        .stat { text-align: center; }
+        .stat-val { font-size: 28px; font-weight: bold; }
+        .stat-val.teal { color: #13EAC1; }
+        .stat-val.blue { color: #52A1FF; }
+        .stat-val.purple { color: #6E33FF; }
+        .stat-lbl { font-size: 12px; color: #6b7280; margin-top: 4px; }
+        
         /* Defect Box */
-        .defect-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 8px 0;
-        }
-
-        .defect-stat {
-            text-align: center;
-        }
-
-        .defect-value {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .defect-value.purple { color: var(--hyland-purple); }
-        .defect-value.dark { color: var(--hyland-dark-blue-60); }
-
-        .defect-label {
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
-
-        .defect-trend {
-            background-color: var(--hyland-teal-30);
-            color: var(--hyland-dark-blue);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
+        .defect-row { display: flex; align-items: center; justify-content: space-around; }
+        .defect-item { text-align: center; }
+        .defect-val { font-size: 26px; font-weight: bold; }
+        .defect-val.purple { color: #6E33FF; }
+        .defect-val.grey { color: #75799E; }
+        .defect-lbl { font-size: 11px; color: #6b7280; margin-top: 4px; }
+        .defect-badge { background: #B9F9EC; color: #191F5E; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+        
         /* Product Bars */
-        .product-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .product-name {
-            width: 80px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--hyland-dark-blue);
-        }
-
-        .product-bar-container {
-            flex: 1;
-            height: 16px;
-            background-color: #f3f4f6;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .product-bar {
-            height: 100%;
-            border-radius: 8px;
-        }
-
-        .product-score {
-            width: 40px;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: right;
-            color: var(--hyland-dark-blue);
-        }
-
-        .product-count {
-            width: 60px;
-            font-size: 11px;
-            color: #9ca3af;
-            text-align: right;
-        }
-
-        /* VoC Themes */
-        .voc-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-        }
-
-        .voc-item {
-            padding: 16px 12px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .voc-item.positive { background-color: var(--hyland-teal-30); }
-        .voc-item.negative { background-color: var(--red-bg); }
-        .voc-item.neutral { background-color: var(--hyland-grey); }
-
-        .voc-theme {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--hyland-dark-blue);
-            margin-bottom: 8px;
-        }
-
-        .voc-count {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--hyland-dark-blue);
-        }
-
-        .voc-label {
-            font-size: 10px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
-
-        /* Aging Chart */
-        .aging-chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 140px;
-            padding: 0 16px;
-        }
-
-        .aging-bar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .aging-count {
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--hyland-dark-blue);
-            margin-bottom: 6px;
-        }
-
-        .aging-bar {
-            width: 50px;
-            border-radius: 6px 6px 0 0;
-        }
-
-        .aging-label {
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: 8px;
-        }
-
-        /* TTFR Goal Bars */
-        .ttfr-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .ttfr-product {
-            width: 70px;
-            font-size: 12px;
-            color: var(--hyland-dark-blue);
-        }
-
-        .ttfr-bar-container {
-            flex: 1;
-            height: 12px;
-            background-color: #f3f4f6;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .ttfr-bar {
-            height: 100%;
-            border-radius: 6px;
-        }
-
-        .ttfr-value {
-            width: 45px;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: right;
-        }
-
-        .ttfr-note {
-            font-size: 11px;
-            color: #9ca3af;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #f3f4f6;
-        }
-
+        .prod-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .prod-name { width: 80px; font-size: 12px; font-weight: 500; color: #191F5E; }
+        .prod-track { flex: 1; height: 16px; background: #f3f4f6; border-radius: 8px; overflow: hidden; }
+        .prod-fill { height: 100%; border-radius: 8px; }
+        .prod-score { width: 35px; font-size: 13px; font-weight: bold; text-align: right; color: #191F5E; }
+        .prod-n { width: 55px; font-size: 11px; color: #9ca3af; text-align: right; }
+        
+        /* VoC */
+        .voc-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .voc-item { padding: 16px 10px; border-radius: 8px; text-align: center; }
+        .voc-item.pos { background: #B9F9EC; }
+        .voc-item.neg { background: #FEE2E2; }
+        .voc-item.neu { background: #F4F6FE; }
+        .voc-theme { font-size: 11px; font-weight: 600; color: #191F5E; margin-bottom: 6px; }
+        .voc-count { font-size: 22px; font-weight: bold; color: #191F5E; }
+        .voc-lbl { font-size: 10px; color: #6b7280; }
+        
+        /* Aging */
+        .aging { display: flex; align-items: flex-end; justify-content: space-around; height: 140px; }
+        .aging-item { display: flex; flex-direction: column; align-items: center; }
+        .aging-val { font-size: 12px; font-weight: bold; color: #191F5E; margin-bottom: 6px; }
+        .aging-bar { width: 50px; border-radius: 6px 6px 0 0; }
+        .aging-lbl { font-size: 11px; color: #6b7280; margin-top: 8px; }
+        
+        /* TTFR Bars */
+        .ttfr-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .ttfr-name { width: 70px; font-size: 12px; color: #191F5E; }
+        .ttfr-track { flex: 1; height: 12px; background: #f3f4f6; border-radius: 6px; overflow: hidden; }
+        .ttfr-fill { height: 100%; border-radius: 6px; }
+        .ttfr-val { width: 40px; font-size: 12px; font-weight: bold; text-align: right; }
+        .ttfr-note { font-size: 11px; color: #9ca3af; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f3f4f6; }
+        
+        /* Warning */
+        .warning { background: #FBEFD0; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #191F5E; }
+        
+        /* Pending */
+        .pending { text-align: center; padding: 32px 16px; }
+        .pending-val { font-size: 36px; font-weight: bold; color: #d1d5db; }
+        .pending-lbl { font-size: 12px; color: #9ca3af; margin-top: 8px; }
+        .pending-note { background: #F4F6FE; padding: 8px 12px; border-radius: 6px; font-size: 11px; color: #6b7280; margin-top: 12px; display: inline-block; }
+        
         /* Footer */
-        .footer {
-            padding: 16px 24px;
-            background-color: white;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background-color: var(--hyland-yellow-30);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--hyland-dark-blue);
-        }
-
-        /* Pending Card */
-        .pending-card {
-            text-align: center;
-            padding: 32px 16px;
-        }
-
-        .pending-value {
-            font-size: 36px;
-            font-weight: bold;
-            color: #d1d5db;
-        }
-
-        .pending-label {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 8px;
-        }
-
-        .pending-note {
-            background-color: var(--hyland-grey);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: 12px;
-            display: inline-block;
-        }
-
-        /* 3 Column Grid */
-        .card-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        /* 2x2 Grid */
-        .card-grid-2x2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 1024px) {
-            .kpi-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .card-grid, .card-grid-2, .card-grid-3 {
-                grid-template-columns: 1fr;
-            }
-            .voc-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .kpi-grid {
-                grid-template-columns: 1fr;
-            }
-            .voc-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .footer { padding: 16px 24px; background: white; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
+        
+        @media (max-width: 900px) {
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+            .row, .row-2 { grid-template-columns: 1fr; }
+            .voc-row { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <h1>TS Scorecard</h1>
-            <span class="version-badge">v1.0 DRAFT</span>
-        </div>
-        <div class="header-right">
-            <span>Last Refreshed: Jan 21, 2026 8:00 AM</span>
-            <span class="period-badge">13 Week View</span>
-        </div>
-    </header>
 
-    <!-- Tabs -->
-    <nav class="tabs">
-        <button class="tab active" onclick="showTab('overview')">Executive Overview</button>
-        <button class="tab" onclick="showTab('customer')">Customer Experience</button>
-        <button class="tab" onclick="showTab('operations')">Operational Excellence</button>
-        <button class="tab" onclick="showTab('cost')">Cost & Emerging</button>
-    </nav>
+<header class="header">
+    <div style="display:flex;align-items:center;">
+        <h1>TS Scorecard</h1>
+        <span class="badge">v1.0 DRAFT</span>
+    </div>
+    <span>Last Updated: Jan 21, 2026 | 13 Week View</span>
+</header>
 
-    <!-- Page 1: Executive Overview -->
-    <div id="overview" class="content active">
-        <!-- KPI Cards -->
-        <div class="kpi-grid">
-            <div class="kpi-card teal">
-                <div class="kpi-title">CSAT Score</div>
-                <div class="kpi-value">4.2</div>
-                <div class="kpi-target">Target: 4.5</div>
-                <div class="kpi-trend positive">↑ 2.5% vs last period</div>
-            </div>
-            <div class="kpi-card purple">
-                <div class="kpi-title">Avg TTR</div>
-                <div class="kpi-value">3.2 days</div>
-                <div class="kpi-target">Target: 3.0 days</div>
-                <div class="kpi-trend negative">↓ 5% vs last period</div>
-            </div>
-            <div class="kpi-card blue">
-                <div class="kpi-title">Avg TTFR</div>
-                <div class="kpi-value">2.1 hrs</div>
-                <div class="kpi-target">Target: 4.0 hrs</div>
-                <div class="kpi-trend positive">↑ 12% vs last period</div>
-            </div>
-            <div class="kpi-card yellow">
-                <div class="kpi-title">Open Backlog</div>
-                <div class="kpi-value">847</div>
-                <div class="kpi-target">cases</div>
-                <div class="kpi-trend positive">↓ 3% vs last period</div>
-            </div>
+<nav class="tabs">
+    <button class="tab active" onclick="showPage(0)">Executive Overview</button>
+    <button class="tab" onclick="showPage(1)">Customer Experience</button>
+    <button class="tab" onclick="showPage(2)">Operational Excellence</button>
+    <button class="tab" onclick="showPage(3)">Cost & Emerging</button>
+</nav>
+
+<!-- PAGE 1: EXECUTIVE OVERVIEW -->
+<div class="page active">
+    <div class="kpi-row">
+        <div class="kpi teal">
+            <div class="kpi-label">CSAT Score</div>
+            <div class="kpi-value">4.2</div>
+            <div class="kpi-target">Target: 4.5</div>
+            <div class="kpi-trend up">↑ 2.5% vs LW</div>
         </div>
-
-        <!-- Trend + Goal Attainment -->
-        <div class="card-grid">
-            <div class="card">
-                <div class="card-title">KPI Trend (13 Weeks)</div>
-                <div class="trend-grid">
-                    <div class="trend-item">
-                        <div class="trend-item-label">CSAT</div>
-                        <div class="sparkline" id="sparkline-csat"></div>
-                    </div>
-                    <div class="trend-item">
-                        <div class="trend-item-label">TTR (days)</div>
-                        <div class="sparkline" id="sparkline-ttr"></div>
-                    </div>
-                    <div class="trend-item">
-                        <div class="trend-item-label">TTFR (hrs)</div>
-                        <div class="sparkline" id="sparkline-ttfr"></div>
-                    </div>
-                    <div class="trend-item">
-                        <div class="trend-item-label">Backlog</div>
-                        <div class="sparkline" id="sparkline-backlog"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Goal Attainment</div>
-                <div class="progress-item">
-                    <div class="progress-header">
-                        <span class="progress-label">CSAT</span>
-                        <span class="progress-value">93 / 100</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 93%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-header">
-                        <span class="progress-label">TTR</span>
-                        <span class="progress-value">94 / 100</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 94%; background-color: var(--hyland-purple);"></div>
-                    </div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-header">
-                        <span class="progress-label">TTFR</span>
-                        <span class="progress-value">100 / 100</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%; background-color: var(--hyland-blue);"></div>
-                    </div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-header">
-                        <span class="progress-label">Defect %</span>
-                        <span class="progress-value">83 / 100</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 83%; background-color: var(--hyland-yellow);"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="kpi purple">
+            <div class="kpi-label">Avg TTR</div>
+            <div class="kpi-value">3.2d</div>
+            <div class="kpi-target">Target: 3.0d</div>
+            <div class="kpi-trend down">↓ 5% vs LW</div>
         </div>
-
-        <!-- Cases Status + Defect -->
-        <div class="card-grid-2">
-            <div class="card">
-                <div class="card-title">Cases by Status</div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value blue">847</div>
-                        <div class="stat-label">Open</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value teal">1,234</div>
-                        <div class="stat-label">Closed (MTD)</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value purple">156</div>
-                        <div class="stat-label">Escalated</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Defect-Linked Cases</div>
-                <div class="defect-box">
-                    <div class="defect-stat">
-                        <div class="defect-value purple">18%</div>
-                        <div class="defect-label">% Tied to Defect</div>
-                    </div>
-                    <div class="defect-stat">
-                        <div class="defect-value dark">312</div>
-                        <div class="defect-label">Defect Cases (WoW)</div>
-                    </div>
-                    <div class="defect-trend">↓ 2% vs LW</div>
-                </div>
-            </div>
+        <div class="kpi blue">
+            <div class="kpi-label">Avg TTFR</div>
+            <div class="kpi-value">2.1h</div>
+            <div class="kpi-target">Target: 4.0h</div>
+            <div class="kpi-trend up">↑ 12% vs LW</div>
+        </div>
+        <div class="kpi yellow">
+            <div class="kpi-label">Backlog</div>
+            <div class="kpi-value">847</div>
+            <div class="kpi-target">Target: &lt;800</div>
+            <div class="kpi-trend up">↓ 3% vs LW</div>
         </div>
     </div>
 
-    <!-- Page 2: Customer Experience -->
-    <div id="customer" class="content">
-        <!-- KPI Cards -->
-        <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="kpi-card teal">
-                <div class="kpi-title">Overall CSAT</div>
-                <div class="kpi-value">4.2 / 5.0</div>
-                <div class="kpi-target">Target: 4.5</div>
-                <div class="kpi-trend positive">↑ 2.5% vs last period</div>
-            </div>
-            <div class="kpi-card blue">
-                <div class="kpi-title">Response Count</div>
-                <div class="kpi-value">1,847</div>
-                <div class="kpi-target">surveys received</div>
-            </div>
-            <div class="kpi-card purple">
-                <div class="kpi-title">Response Rate</div>
-                <div class="kpi-value">32%</div>
-                <div class="kpi-target">Target: 35%</div>
-                <div class="kpi-trend positive">↑ 1.2% vs last period</div>
-            </div>
-        </div>
-
-        <!-- CSAT by Product + Trend -->
-        <div class="card-grid-2">
-            <div class="card">
-                <div class="card-title">CSAT by Product Line</div>
-                <div class="product-row">
-                    <div class="product-name">OnBase</div>
-                    <div class="product-bar-container">
-                        <div class="product-bar" style="width: 88%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="product-score">4.4</div>
-                    <div class="product-count">n=523</div>
-                </div>
-                <div class="product-row">
-                    <div class="product-name">Perceptive</div>
-                    <div class="product-bar-container">
-                        <div class="product-bar" style="width: 82%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="product-score">4.1</div>
-                    <div class="product-count">n=312</div>
-                </div>
-                <div class="product-row">
-                    <div class="product-name">Alfresco</div>
-                    <div class="product-bar-container">
-                        <div class="product-bar" style="width: 78%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="product-score">3.9</div>
-                    <div class="product-count">n=287</div>
-                </div>
-                <div class="product-row">
-                    <div class="product-name">Nuxeo</div>
-                    <div class="product-bar-container">
-                        <div class="product-bar" style="width: 80%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="product-score">4.0</div>
-                    <div class="product-count">n=198</div>
-                </div>
-                <div class="product-row">
-                    <div class="product-name">Brainware</div>
-                    <div class="product-bar-container">
-                        <div class="product-bar" style="width: 86%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="product-score">4.3</div>
-                    <div class="product-count">n=156</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">CSAT Trend (13 Weeks)</div>
-                <div class="sparkline" id="sparkline-csat-detail" style="height: 120px;"></div>
-                <div class="sparkline-labels">
-                    <span class="sparkline-label">Week 1</span>
-                    <span class="sparkline-label">Week 13</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- VoC Themes -->
+    <div class="row">
         <div class="card">
-            <div class="card-title">Voice of Customer - Top Themes</div>
-            <div class="voc-grid">
-                <div class="voc-item positive">
-                    <div class="voc-theme">Response Time</div>
-                    <div class="voc-count">234</div>
-                    <div class="voc-label">mentions</div>
+            <div class="card-title">KPI Trend (13 Weeks)</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+                <div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">CSAT</div>
+                    <div class="spark">
+                        <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:100%;background:#13EAC1;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:100%;background:#13EAC1;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:1;"></div>
+                    </div>
                 </div>
-                <div class="voc-item positive">
-                    <div class="voc-theme">Knowledge</div>
-                    <div class="voc-count">189</div>
-                    <div class="voc-label">mentions</div>
+                <div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTR (days)</div>
+                    <div class="spark">
+                        <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:90%;background:#6E33FF;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:80%;background:#6E33FF;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:85%;background:#6E33FF;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:65%;background:#6E33FF;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:65%;background:#6E33FF;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:1;"></div>
+                    </div>
                 </div>
-                <div class="voc-item negative">
-                    <div class="voc-theme">Documentation</div>
-                    <div class="voc-count">156</div>
-                    <div class="voc-label">mentions</div>
+                <div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTFR (hrs)</div>
+                    <div class="spark">
+                        <div class="spark-bar" style="height:100%;background:#52A1FF;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:85%;background:#52A1FF;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:90%;background:#52A1FF;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:75%;background:#52A1FF;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:70%;background:#52A1FF;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:60%;background:#52A1FF;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:65%;background:#52A1FF;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:55%;background:#52A1FF;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:55%;background:#52A1FF;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:45%;background:#52A1FF;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:1;"></div>
+                    </div>
                 </div>
-                <div class="voc-item positive">
-                    <div class="voc-theme">Resolution Quality</div>
-                    <div class="voc-count">143</div>
-                    <div class="voc-label">mentions</div>
-                </div>
-                <div class="voc-item neutral">
-                    <div class="voc-theme">Communication</div>
-                    <div class="voc-count">121</div>
-                    <div class="voc-label">mentions</div>
+                <div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">Backlog</div>
+                    <div class="spark">
+                        <div class="spark-bar" style="height:100%;background:#F1CB61;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:95%;background:#F1CB61;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:88%;background:#F1CB61;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:90%;background:#F1CB61;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:82%;background:#F1CB61;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:78%;background:#F1CB61;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:80%;background:#F1CB61;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:75%;background:#F1CB61;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:72%;background:#F1CB61;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:75%;background:#F1CB61;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:73%;background:#F1CB61;opacity:1;"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Page 3: Operational Excellence -->
-    <div id="operations" class="content">
-        <!-- KPI Cards -->
-        <div class="kpi-grid">
-            <div class="kpi-card purple">
-                <div class="kpi-title">Avg TTR</div>
-                <div class="kpi-value">3.2 days</div>
-                <div class="kpi-target">Target: 3.0 days</div>
-                <div class="kpi-trend negative">↓ 5% vs last period</div>
-            </div>
-            <div class="kpi-card blue">
-                <div class="kpi-title">Avg TTFR</div>
-                <div class="kpi-value">2.1 hrs</div>
-                <div class="kpi-target">Target: 4.0 hrs</div>
-                <div class="kpi-trend positive">↑ 12% vs last period</div>
-            </div>
-            <div class="kpi-card yellow">
-                <div class="kpi-title">Open Backlog</div>
-                <div class="kpi-value">847</div>
-                <div class="kpi-target">cases</div>
-                <div class="kpi-trend positive">↓ 3% vs last period</div>
-            </div>
-            <div class="kpi-card teal">
-                <div class="kpi-title">% to Defect</div>
-                <div class="kpi-value">18%</div>
-                <div class="kpi-target">312 cases WoW</div>
-                <div class="kpi-trend positive">↓ 2% vs last period</div>
-            </div>
-        </div>
-
-        <!-- Case Aging + TTFR Goal -->
-        <div class="card-grid-2">
-            <div class="card">
-                <div class="card-title">Case Aging Distribution</div>
-                <div class="aging-chart">
-                    <div class="aging-bar-wrapper">
-                        <div class="aging-count">312</div>
-                        <div class="aging-bar" style="height: 100px; background-color: var(--hyland-teal);"></div>
-                        <div class="aging-label">0-7d</div>
-                    </div>
-                    <div class="aging-bar-wrapper">
-                        <div class="aging-count">198</div>
-                        <div class="aging-bar" style="height: 63px; background-color: var(--hyland-blue);"></div>
-                        <div class="aging-label">8-14d</div>
-                    </div>
-                    <div class="aging-bar-wrapper">
-                        <div class="aging-count">156</div>
-                        <div class="aging-bar" style="height: 50px; background-color: var(--hyland-yellow);"></div>
-                        <div class="aging-label">15-30d</div>
-                    </div>
-                    <div class="aging-bar-wrapper">
-                        <div class="aging-count">98</div>
-                        <div class="aging-bar" style="height: 31px; background-color: var(--hyland-purple-60);"></div>
-                        <div class="aging-label">31-60d</div>
-                    </div>
-                    <div class="aging-bar-wrapper">
-                        <div class="aging-count">83</div>
-                        <div class="aging-bar" style="height: 27px; background-color: var(--hyland-purple);"></div>
-                        <div class="aging-label">60+d</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">TTFR - % to Goal (80%)</div>
-                <div class="ttfr-row">
-                    <div class="ttfr-product">OnBase</div>
-                    <div class="ttfr-bar-container">
-                        <div class="ttfr-bar" style="width: 92%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="ttfr-value" style="color: var(--green-text);">92%</div>
-                </div>
-                <div class="ttfr-row">
-                    <div class="ttfr-product">Perceptive</div>
-                    <div class="ttfr-bar-container">
-                        <div class="ttfr-bar" style="width: 85%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="ttfr-value" style="color: var(--green-text);">85%</div>
-                </div>
-                <div class="ttfr-row">
-                    <div class="ttfr-product">Alfresco</div>
-                    <div class="ttfr-bar-container">
-                        <div class="ttfr-bar" style="width: 78%; background-color: var(--hyland-yellow);"></div>
-                    </div>
-                    <div class="ttfr-value" style="color: var(--yellow-text);">78%</div>
-                </div>
-                <div class="ttfr-row">
-                    <div class="ttfr-product">Nuxeo</div>
-                    <div class="ttfr-bar-container">
-                        <div class="ttfr-bar" style="width: 81%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="ttfr-value" style="color: var(--green-text);">81%</div>
-                </div>
-                <div class="ttfr-row">
-                    <div class="ttfr-product">Brainware</div>
-                    <div class="ttfr-bar-container">
-                        <div class="ttfr-bar" style="width: 88%; background-color: var(--hyland-teal);"></div>
-                    </div>
-                    <div class="ttfr-value" style="color: var(--green-text);">88%</div>
-                </div>
-                <div class="ttfr-note">Goal: 80% of cases first response within 4 hours</div>
-            </div>
-        </div>
-
-        <!-- Defect WoW -->
         <div class="card">
-            <div class="card-title">Defect-Linked Cases (Week over Week)</div>
-            <div class="sparkline" id="sparkline-defect" style="height: 80px;"></div>
-            <div class="sparkline-labels" style="justify-content: space-around;">
-                <span class="sparkline-label">W1</span>
-                <span class="sparkline-label">W2</span>
-                <span class="sparkline-label">W3</span>
-                <span class="sparkline-label">W4</span>
-                <span class="sparkline-label">W5</span>
-                <span class="sparkline-label">W6</span>
-                <span class="sparkline-label">Current</span>
+            <div class="card-title">Goal Attainment</div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">CSAT</span><span class="progress-value">93 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:93%;background:#13EAC1;"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">TTR</span><span class="progress-value">94 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:94%;background:#6E33FF;"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">TTFR</span><span class="progress-value">100 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:100%;background:#52A1FF;"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">Defect %</span><span class="progress-value">83 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:83%;background:#F1CB61;"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- Page 4: Cost & Emerging -->
-    <div id="cost" class="content">
-        <div class="warning-box">
-            ⚠️ Cost metrics pending Finance data from Mindy. Placeholder values shown below.
-        </div>
-
-        <!-- Cost KPIs -->
-        <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="kpi-card yellow">
-                <div class="kpi-title">Cost per Case</div>
-                <div class="kpi-value" style="color: #d1d5db;">TBD</div>
-                <div class="kpi-target">Target: $135</div>
-                <div class="kpi-trend" style="color: #9ca3af;">Pending Finance</div>
-            </div>
-            <div class="kpi-card purple">
-                <div class="kpi-title">Support Cost % Rev</div>
-                <div class="kpi-value" style="color: #d1d5db;">TBD</div>
-                <div class="kpi-target">Target: 7.5%</div>
-                <div class="kpi-trend" style="color: #9ca3af;">Pending Finance</div>
-            </div>
-            <div class="kpi-card blue">
-                <div class="kpi-title">Low Cost Location %</div>
-                <div class="kpi-value" style="color: #d1d5db;">TBD</div>
-                <div class="kpi-target">Target: 40%</div>
-                <div class="kpi-trend" style="color: #9ca3af;">Requires Workday</div>
+    <div class="row-2">
+        <div class="card">
+            <div class="card-title">Cases by Status</div>
+            <div class="stats">
+                <div class="stat"><div class="stat-val blue">847</div><div class="stat-lbl">Open</div></div>
+                <div class="stat"><div class="stat-val teal">1,234</div><div class="stat-lbl">Closed (MTD)</div></div>
+                <div class="stat"><div class="stat-val purple">156</div><div class="stat-lbl">Escalated</div></div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-title">Defect-Linked Cases</div>
+            <div class="defect-row">
+                <div class="defect-item"><div class="defect-val purple">18%</div><div class="defect-lbl">% Tied to Defect</div></div>
+                <div class="defect-item"><div class="defect-val grey">312</div><div class="defect-lbl">Defect Cases (WoW)</div></div>
+                <div class="defect-badge">↓ 2% vs LW</div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <div class="card-title" style="margin: 24px 0 16px; color: var(--hyland-dark-blue);">Emerging Metrics (Data Pending)</div>
+<!-- PAGE 2: CUSTOMER EXPERIENCE -->
+<div class="page">
+    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kpi teal">
+            <div class="kpi-label">Overall CSAT</div>
+            <div class="kpi-value">4.2 / 5.0</div>
+            <div class="kpi-target">Target: 4.5</div>
+            <div class="kpi-trend up">↑ 2.5% vs LW</div>
+        </div>
+        <div class="kpi blue">
+            <div class="kpi-label">Response Count</div>
+            <div class="kpi-value">1,847</div>
+            <div class="kpi-target">surveys received</div>
+        </div>
+        <div class="kpi purple">
+            <div class="kpi-label">Response Rate</div>
+            <div class="kpi-value">32%</div>
+            <div class="kpi-target">Target: 35%</div>
+            <div class="kpi-trend up">↑ 1.2% vs LW</div>
+        </div>
+    </div>
 
-        <!-- Emerging Metrics -->
-        <div class="card-grid-2x2">
-            <div class="card">
-                <div class="card-title">Self-Service Rate</div>
-                <div class="pending-card">
-                    <div class="pending-value">—</div>
-                    <div class="pending-label">Data not yet available</div>
-                    <div class="pending-note">Requires: Community portal integration</div>
-                </div>
+    <div class="row-2">
+        <div class="card">
+            <div class="card-title">CSAT by Product Line</div>
+            <div class="prod-row"><div class="prod-name">OnBase</div><div class="prod-track"><div class="prod-fill" style="width:88%;background:#13EAC1;"></div></div><div class="prod-score">4.4</div><div class="prod-n">n=523</div></div>
+            <div class="prod-row"><div class="prod-name">Perceptive</div><div class="prod-track"><div class="prod-fill" style="width:82%;background:#13EAC1;"></div></div><div class="prod-score">4.1</div><div class="prod-n">n=312</div></div>
+            <div class="prod-row"><div class="prod-name">Alfresco</div><div class="prod-track"><div class="prod-fill" style="width:78%;background:#13EAC1;"></div></div><div class="prod-score">3.9</div><div class="prod-n">n=287</div></div>
+            <div class="prod-row"><div class="prod-name">Nuxeo</div><div class="prod-track"><div class="prod-fill" style="width:80%;background:#13EAC1;"></div></div><div class="prod-score">4.0</div><div class="prod-n">n=198</div></div>
+            <div class="prod-row"><div class="prod-name">Brainware</div><div class="prod-track"><div class="prod-fill" style="width:86%;background:#13EAC1;"></div></div><div class="prod-score">4.3</div><div class="prod-n">n=156</div></div>
+        </div>
+        <div class="card">
+            <div class="card-title">CSAT Trend (13 Weeks)</div>
+            <div class="spark" style="height:120px;">
+                <div class="spark-bar" style="height:60%;background:#13EAC1;opacity:0.6;"></div>
+                <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.65;"></div>
+                <div class="spark-bar" style="height:60%;background:#13EAC1;opacity:0.7;"></div>
+                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.73;"></div>
+                <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.76;"></div>
+                <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.8;"></div>
+                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.83;"></div>
+                <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.86;"></div>
+                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.9;"></div>
+                <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.93;"></div>
+                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.96;"></div>
+                <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.98;"></div>
+                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:1;"></div>
             </div>
-            <div class="card">
-                <div class="card-title">Knowledge Base Activity</div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value teal">47</div>
-                        <div class="stat-label">Articles Created</div>
-                        <div class="stat-label" style="font-size: 10px;">This Month</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value blue">123</div>
-                        <div class="stat-label">Articles Updated</div>
-                        <div class="stat-label" style="font-size: 10px;">This Month</div>
-                    </div>
-                </div>
-                <div style="font-size: 11px; color: #9ca3af; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f3f4f6;">
-                    Full KB report: <a href="https://hyland.atlassian.net/browse/CXPM-2235" style="color: var(--hyland-blue);">CXPM-2235</a> (due 1/23)
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Top 10 Requested Features</div>
-                <div class="pending-card">
-                    <div class="pending-value">—</div>
-                    <div class="pending-label">When implemented</div>
-                    <div class="pending-note">Requires: Feature request tracking system</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Premium Support ARR</div>
-                <div class="pending-card">
-                    <div class="pending-value">—</div>
-                    <div class="pending-label">Data pending</div>
-                    <div class="pending-note">Requires: Finance/Sales data integration</div>
-                </div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:#9ca3af;">
+                <span>Week 1</span><span>Week 13</span>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div>Data Source: Salesforce, ServiceNow</div>
-        <div>Due: Jan 23, 2026 | Owner: D&I Team</div>
-    </footer>
+    <div class="card">
+        <div class="card-title">Voice of Customer - Top Themes</div>
+        <div class="voc-row">
+            <div class="voc-item pos"><div class="voc-theme">Response Time</div><div class="voc-count">234</div><div class="voc-lbl">mentions</div></div>
+            <div class="voc-item pos"><div class="voc-theme">Knowledge</div><div class="voc-count">189</div><div class="voc-lbl">mentions</div></div>
+            <div class="voc-item neg"><div class="voc-theme">Documentation</div><div class="voc-count">156</div><div class="voc-lbl">mentions</div></div>
+            <div class="voc-item pos"><div class="voc-theme">Resolution Quality</div><div class="voc-count">143</div><div class="voc-lbl">mentions</div></div>
+            <div class="voc-item neu"><div class="voc-theme">Communication</div><div class="voc-count">121</div><div class="voc-lbl">mentions</div></div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        // Tab switching
-        function showTab(tabId) {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
+<!-- PAGE 3: OPERATIONAL EXCELLENCE -->
+<div class="page">
+    <div class="kpi-row">
+        <div class="kpi purple">
+            <div class="kpi-label">Avg TTR</div>
+            <div class="kpi-value">3.2d</div>
+            <div class="kpi-target">Target: 3.0d</div>
+            <div class="kpi-trend down">↓ 5% vs LW</div>
+        </div>
+        <div class="kpi blue">
+            <div class="kpi-label">Avg TTFR</div>
+            <div class="kpi-value">2.1h</div>
+            <div class="kpi-target">Target: 4.0h</div>
+            <div class="kpi-trend up">↑ 12% vs LW</div>
+        </div>
+        <div class="kpi yellow">
+            <div class="kpi-label">Open Backlog</div>
+            <div class="kpi-value">847</div>
+            <div class="kpi-target">cases</div>
+            <div class="kpi-trend up">↓ 3% vs LW</div>
+        </div>
+        <div class="kpi teal">
+            <div class="kpi-label">% to Defect</div>
+            <div class="kpi-value">18%</div>
+            <div class="kpi-target">312 cases WoW</div>
+            <div class="kpi-trend up">↓ 2% vs LW</div>
+        </div>
+    </div>
 
-        // Create sparkline chart
-        function createSparkline(elementId, data, color) {
-            const container = document.getElementById(elementId);
-            if (!container) return;
-            
-            const max = Math.max(...data);
-            const min = Math.min(...data);
-            const range = max - min || 1;
-            
-            container.innerHTML = '';
-            data.forEach((val, i) => {
-                const bar = document.createElement('div');
-                bar.className = 'sparkline-bar';
-                const height = ((val - min) / range) * 100;
-                bar.style.height = Math.max(height, 5) + '%';
-                bar.style.backgroundColor = color;
-                bar.style.opacity = 0.5 + (i / data.length) * 0.5;
-                container.appendChild(bar);
-            });
-        }
+    <div class="row-2">
+        <div class="card">
+            <div class="card-title">Case Aging Distribution</div>
+            <div class="aging">
+                <div class="aging-item"><div class="aging-val">312</div><div class="aging-bar" style="height:100px;background:#13EAC1;"></div><div class="aging-lbl">0-7d</div></div>
+                <div class="aging-item"><div class="aging-val">198</div><div class="aging-bar" style="height:63px;background:#52A1FF;"></div><div class="aging-lbl">8-14d</div></div>
+                <div class="aging-item"><div class="aging-val">156</div><div class="aging-bar" style="height:50px;background:#F1CB61;"></div><div class="aging-lbl">15-30d</div></div>
+                <div class="aging-item"><div class="aging-val">98</div><div class="aging-bar" style="height:31px;background:#A785FF;"></div><div class="aging-lbl">31-60d</div></div>
+                <div class="aging-item"><div class="aging-val">83</div><div class="aging-bar" style="height:27px;background:#6E33FF;"></div><div class="aging-lbl">60+d</div></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">TTFR - % to Goal (80%)</div>
+            <div class="ttfr-row"><div class="ttfr-name">OnBase</div><div class="ttfr-track"><div class="ttfr-fill" style="width:92%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">92%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Perceptive</div><div class="ttfr-track"><div class="ttfr-fill" style="width:85%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">85%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Alfresco</div><div class="ttfr-track"><div class="ttfr-fill" style="width:78%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">78%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Nuxeo</div><div class="ttfr-track"><div class="ttfr-fill" style="width:81%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">81%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Brainware</div><div class="ttfr-track"><div class="ttfr-fill" style="width:88%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">88%</div></div>
+            <div class="ttfr-note">Goal: 80% of cases first response within 4 hours</div>
+        </div>
+    </div>
 
-        // Initialize charts
-        document.addEventListener('DOMContentLoaded', function() {
-            // Executive Overview sparklines
-            createSparkline('sparkline-csat', [4.0, 4.1, 4.0, 4.2, 4.1, 4.3, 4.2, 4.1, 4.2, 4.3, 4.2, 4.1, 4.2], '#13EAC1');
-            createSparkline('sparkline-ttr', [3.5, 3.4, 3.6, 3.3, 3.4, 3.2, 3.3, 3.1, 3.2, 3.3, 3.2, 3.1, 3.2], '#6E33FF');
-            createSparkline('sparkline-ttfr', [2.8, 2.5, 2.6, 2.4, 2.3, 2.2, 2.4, 2.3, 2.1, 2.2, 2.0, 2.1, 2.1], '#52A1FF');
-            createSparkline('sparkline-backlog', [920, 900, 880, 870, 890, 860, 850, 870, 860, 850, 840, 850, 847], '#F1CB61');
-            
-            // Customer Experience detail sparkline
-            createSparkline('sparkline-csat-detail', [4.0, 4.1, 4.0, 4.2, 4.1, 4.3, 4.2, 4.1, 4.2, 4.3, 4.2, 4.1, 4.2], '#13EAC1');
-            
-            // Defect WoW sparkline
-            createSparkline('sparkline-defect', [298, 312, 287, 301, 325, 298, 312], '#6E33FF');
-        });
-    </script>
+    <div class="card">
+        <div class="card-title">Defect-Linked Cases (Week over Week)</div>
+        <div class="spark" style="height:80px;">
+            <div class="spark-bar" style="height:85%;background:#6E33FF;opacity:0.6;"></div>
+            <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.7;"></div>
+            <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.75;"></div>
+            <div class="spark-bar" style="height:88%;background:#6E33FF;opacity:0.8;"></div>
+            <div class="spark-bar" style="height:110%;background:#6E33FF;opacity:0.85;"></div>
+            <div class="spark-bar" style="height:85%;background:#6E33FF;opacity:0.9;"></div>
+            <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:1;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-around;margin-top:8px;font-size:10px;color:#9ca3af;">
+            <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>Current</span>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 4: COST & EMERGING -->
+<div class="page">
+    <div class="warning">⚠️ Cost metrics pending Finance data from Mindy. Placeholder values shown below.</div>
+
+    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kpi yellow">
+            <div class="kpi-label">Cost per Case</div>
+            <div class="kpi-value" style="color:#d1d5db;">TBD</div>
+            <div class="kpi-target">Target: $135</div>
+            <div class="kpi-trend" style="color:#9ca3af;">Pending Finance</div>
+        </div>
+        <div class="kpi purple">
+            <div class="kpi-label">Support Cost % Rev</div>
+            <div class="kpi-value" style="color:#d1d5db;">TBD</div>
+            <div class="kpi-target">Target: 7.5%</div>
+            <div class="kpi-trend" style="color:#9ca3af;">Pending Finance</div>
+        </div>
+        <div class="kpi blue">
+            <div class="kpi-label">Low Cost Location %</div>
+            <div class="kpi-value" style="color:#d1d5db;">TBD</div>
+            <div class="kpi-target">Target: 40%</div>
+            <div class="kpi-trend" style="color:#9ca3af;">Requires Workday</div>
+        </div>
+    </div>
+
+    <div style="font-size:14px;font-weight:600;color:#191F5E;margin:24px 0 16px;">Emerging Metrics (Data Pending)</div>
+
+    <div class="row-2">
+        <div class="card">
+            <div class="card-title">Self-Service Rate</div>
+            <div class="pending"><div class="pending-val">—</div><div class="pending-lbl">Data not yet available</div><div class="pending-note">Requires: Community portal integration</div></div>
+        </div>
+        <div class="card">
+            <div class="card-title">Knowledge Base Activity</div>
+            <div class="stats">
+                <div class="stat"><div class="stat-val teal">47</div><div class="stat-lbl">Articles Created</div><div style="font-size:10px;color:#9ca3af;">This Month</div></div>
+                <div class="stat"><div class="stat-val blue">123</div><div class="stat-lbl">Articles Updated</div><div style="font-size:10px;color:#9ca3af;">This Month</div></div>
+            </div>
+            <div style="font-size:11px;color:#9ca3af;margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6;">Full KB report: CXPM-2235 (due 1/23)</div>
+        </div>
+    </div>
+
+    <div class="row-2">
+        <div class="card">
+            <div class="card-title">Top 10 Requested Features</div>
+            <div class="pending"><div class="pending-val">—</div><div class="pending-lbl">When implemented</div><div class="pending-note">Requires: Feature request tracking system</div></div>
+        </div>
+        <div class="card">
+            <div class="card-title">Premium Support ARR</div>
+            <div class="pending"><div class="pending-val">—</div><div class="pending-lbl">Data pending</div><div class="pending-note">Requires: Finance/Sales data integration</div></div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div>Data Source: Salesforce, ServiceNow</div>
+    <div>Due: Jan 23, 2026 | Owner: D&I Team</div>
+</footer>
+
+<script>
+function showPage(n) {
+    var pages = document.querySelectorAll('.page');
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove('active');
+        tabs[i].classList.remove('active');
+    }
+    pages[n].classList.add('active');
+    tabs[n].classList.add('active');
+}
+</script>
+
 </body>
 </html>
