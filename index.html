@@ -3,102 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TS Scorecard Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>TS Scorecard - Internal</title>
+    <style>
+        /* Hyland Color Palette */
+        :root {
+            --dark-blue: #191F5E;
+            --teal: #13EAC1;
+            --purple: #6E33FF;
+            --blue: #52A1FF;
+            --yellow: #F1CB61;
+            --grey: #F4F6FE;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--grey);
+            margin: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* KPI Card Styling */
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid #ccc;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+
+        .card-target {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 0.25rem;
+        }
+
+        .trend-up { color: #059669; font-size: 0.85rem; margin-top: 0.5rem; }
+        .trend-down { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
+
+        /* Simple Bar Chart */
+        .chart-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .bar-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 100px;
+            margin-top: 1rem;
+        }
+
+        .bar {
+            flex: 1;
+            background-color: var(--blue);
+            border-radius: 2px 2px 0 0;
+        }
+    </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState } = React;
+    <header>
+        <div>
+            <h1 style="margin:0; font-size: 1.25rem;">TS Scorecard</h1>
+        </div>
+        <div style="font-size: 0.75rem; opacity: 0.8;">Last Updated: Jan 21, 2026</div>
+    </header>
 
-        const hylandColors = {
-            grey: '#F4F6FE',
-            darkBlue: '#191F5E',
-            teal: '#13EAC1',
-            purple: '#6E33FF',
-            blue: '#52A1FF',
-            yellow: '#F1CB61',
-            darkBlue60: '#75799E',
-            teal60: '#70F2DA',
-            purple60: '#A785FF',
-            blue60: '#97C7FF',
-            yellow60: '#F7E0A0',
-        };
-
-        const KPICard = ({ title, value, target, trend, color }) => (
-            <div className="bg-white rounded-lg p-4 shadow-md border-l-4" style={{ borderLeftColor: color }}>
-                <div className="text-xs text-gray-500 uppercase font-bold mb-1">{title}</div>
-                <div className="text-2xl font-bold" style={{ color: hylandColors.darkBlue }}>{value}</div>
-                <div className="text-xs text-gray-400">Target: {target}</div>
-                {trend && (
-                    <div className={`text-xs mt-2 ${trend > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                        {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% vs LW
-                    </div>
-                )}
+    <div class="container">
+        <div class="grid">
+            <div class="card" style="border-left-color: var(--teal);">
+                <div class="card-title">CSAT Score</div>
+                <div class="card-value">4.2</div>
+                <div class="card-target">Target: 4.5</div>
+                <div class="trend-up">↑ 2.5% vs LW</div>
             </div>
-        );
 
-        const MiniChart = ({ data, color }) => (
-            <div className="flex items-end gap-1 h-10">
-                {data.map((val, i) => (
-                    <div key={i} className="flex-1 rounded-t" style={{
-                        height: `${(val / Math.max(...data)) * 100}%`,
-                        backgroundColor: color,
-                        opacity: 0.6 + (i / data.length) * 0.4
-                    }} />
-                ))}
+            <div class="card" style="border-left-color: var(--purple);">
+                <div class="card-title">Avg TTR</div>
+                <div class="card-value">3.2d</div>
+                <div class="card-target">Target: 3.0d</div>
+                <div class="trend-down">↓ 5.0% vs LW</div>
             </div>
-        );
 
-        const Dashboard = () => {
-            const [activeTab, setActiveTab] = useState('Overview');
+            <div class="card" style="border-left-color: var(--blue);">
+                <div class="card-title">Avg TTFR</div>
+                <div class="card-value">2.1h</div>
+                <div class="card-target">Target: 4.0h</div>
+                <div class="trend-up">↑ 12% vs LW</div>
+            </div>
 
-            return (
-                <div className="min-h-screen" style={{ backgroundColor: hylandColors.grey }}>
-                    {/* Header */}
-                    <nav className="p-4 text-white flex justify-between items-center" style={{ backgroundColor: hylandColors.darkBlue }}>
-                        <h1 className="text-lg font-bold">TS Scorecard</h1>
-                        <span className="text-xs opacity-70">Updated: Jan 21, 2026</span>
-                    </nav>
+            <div class="card" style="border-left-color: var(--yellow);">
+                <div class="card-title">Backlog</div>
+                <div class="card-value">847</div>
+                <div class="card-target">Target: &lt;800</div>
+                <div class="trend-up">↑ 3% vs LW</div>
+            </div>
+        </div>
 
-                    {/* Tabs */}
-                    <div className="bg-white border-b flex px-4">
-                        {['Overview', 'Performance', 'Cost'].map(tab => (
-                            <button 
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`py-3 px-6 text-sm font-medium ${activeTab === tab ? 'border-b-2' : 'text-gray-500'}`}
-                                style={activeTab === tab ? { borderBottomColor: hylandColors.teal, color: hylandColors.darkBlue } : {}}
-                            >
-                                {tab}
-                            </button>
-                        ))}
-                    </div>
+        <div class="chart-box">
+            <h3 style="margin:0; color: var(--dark-blue);">Weekly Case Volume</h3>
+            <div class="bar-container">
+                <div class="bar" style="height: 60%;"></div>
+                <div class="bar" style="height: 75%;"></div>
+                <div class="bar" style="height: 70%;"></div>
+                <div class="bar" style="height: 85%;"></div>
+                <div class="bar" style="height: 80%;"></div>
+                <div class="bar" style="height: 95%;"></div>
+                <div class="bar" style="height: 90%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #999; margin-top: 5px;">
+                <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>Current</span>
+            </div>
+        </div>
+    </div>
 
-                    {/* Content */}
-                    <div className="p-6 space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <KPICard title="CSAT Score" value="4.2" target="4.5" trend={2.5} color={hylandColors.teal} />
-                            <KPICard title="Avg TTR" value="3.2d" target="3.0d" trend={-5} color={hylandColors.purple} />
-                            <KPICard title="TTFR" value="2.1h" target="4.0h" trend={12} color={hylandColors.blue} />
-                            <KPICard title="Backlog" value="847" target="<800" trend={-3} color={hylandColors.yellow} />
-                        </div>
-
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="font-bold mb-4" style={{ color: hylandColors.darkBlue }}>Weekly Volume Trend</h3>
-                            <MiniChart data={[45, 52, 49, 60, 55, 68, 72]} color={hylandColors.blue} />
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<Dashboard />);
-    </script>
 </body>
 </html>
