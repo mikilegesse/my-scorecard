@@ -26,6 +26,8 @@
         
         /* KPI Cards */
         .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
+        .kpi-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .kpi-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
         .kpi { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid; }
         .kpi.teal { border-color: #13EAC1; }
         .kpi.purple { border-color: #6E33FF; }
@@ -117,6 +119,15 @@
         .pending-lbl { font-size: 12px; color: #9ca3af; margin-top: 8px; }
         .pending-note { background: #F4F6FE; padding: 8px 12px; border-radius: 6px; font-size: 11px; color: #6b7280; margin-top: 12px; display: inline-block; }
         
+        /* Chart */
+        .chart-container { position: relative; }
+        .chart-legend { display: flex; gap: 20px; margin-bottom: 12px; font-size: 11px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-line { width: 24px; height: 3px; border-radius: 2px; }
+        .legend-line.solid { background: #6E33FF; }
+        .legend-line.dashed { background: repeating-linear-gradient(90deg, #6E33FF 0, #6E33FF 4px, transparent 4px, transparent 8px); }
+        .legend-line.target { background: repeating-linear-gradient(90deg, #EF4444 0, #EF4444 4px, transparent 4px, transparent 8px); }
+        
         /* Footer */
         .footer { padding: 16px 24px; background: white; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
         
@@ -124,7 +135,7 @@
             .kpi-row { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+            .kpi-row, .kpi-row-3, .kpi-row-4 { grid-template-columns: repeat(2, 1fr); }
             .row, .row-2 { grid-template-columns: 1fr; }
             .voc-row { grid-template-columns: repeat(3, 1fr); }
         }
@@ -137,7 +148,7 @@
         <h1>TS Scorecard</h1>
         <span class="badge">v1.0 DRAFT</span>
     </div>
-    <span>Last Updated: Jan 21, 2026 | 13 Week View</span>
+    <span>Last Updated: Dec 2025 (Actuals) | 13 Week View</span>
 </header>
 
 <nav class="tabs">
@@ -303,7 +314,7 @@
 
 <!-- PAGE 2: CUSTOMER EXPERIENCE -->
 <div class="page">
-    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+    <div class="kpi-row-3">
         <div class="kpi teal">
             <div class="kpi-label">CSAT SCORE</div>
             <div class="kpi-value">88.42%</div>
@@ -369,7 +380,7 @@
 
 <!-- PAGE 3: OPERATIONAL EXCELLENCE -->
 <div class="page">
-    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
+    <div class="kpi-row-4">
         <div class="kpi purple">
             <div class="kpi-label">TTR</div>
             <div class="kpi-value">46.45%</div>
@@ -437,9 +448,8 @@
 
 <!-- PAGE 4: COST & EMERGING -->
 <div class="page">
-    <div class="warning">⚠️ Cost metrics based on Dec 2025 actuals. Jan 2026+ values are forecasts.</div>
-
-    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+    <!-- KPI Cards - Actuals Only (Dec 2025) -->
+    <div class="kpi-row-3">
         <div class="kpi yellow">
             <div class="kpi-label">Cost per Case</div>
             <div class="kpi-value" style="color:#d1d5db;">TBD</div>
@@ -449,14 +459,246 @@
         <div class="kpi purple">
             <div class="kpi-label">Support Cost % of Revenue</div>
             <div class="kpi-value">2.68%</div>
-            <div class="kpi-target">Target: 7.5%</div>
+            <div class="kpi-target">Target: &lt;7.5%</div>
             <div class="kpi-trend up">✓ Under budget</div>
         </div>
         <div class="kpi blue">
             <div class="kpi-label">Low Cost Location %</div>
             <div class="kpi-value">5.21%</div>
             <div class="kpi-target">Target: 40%</div>
-            <div class="kpi-trend down">↑ Growing slowly</div>
+            <div class="kpi-trend down">13% of goal</div>
+        </div>
+    </div>
+
+    <!-- Line Charts -->
+    <div class="row-2">
+        <!-- Support Cost % of Revenue Chart -->
+        <div class="card">
+            <div class="card-title">Support Cost as % of Revenue (Actual vs Forecast)</div>
+            <div class="chart-legend">
+                <div class="legend-item"><div class="legend-line solid"></div><span>Actual</span></div>
+                <div class="legend-item"><div class="legend-line dashed"></div><span>Forecast</span></div>
+                <div class="legend-item"><div class="legend-line target"></div><span>Target (7.5%)</span></div>
+            </div>
+            <div class="chart-container">
+                <svg viewBox="0 0 700 200" style="width:100%;height:200px;">
+                    <!-- Grid lines -->
+                    <line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="180" x2="680" y2="180" stroke="#f3f4f6" stroke-width="1"/>
+                    
+                    <!-- Y-axis labels -->
+                    <text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">8%</text>
+                    <text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">6%</text>
+                    <text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">4%</text>
+                    <text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">2%</text>
+                    <text x="45" y="184" font-size="10" fill="#9ca3af" text-anchor="end">0%</text>
+                    
+                    <!-- Target line (7.5%) -->
+                    <line x1="50" y1="32" x2="680" y2="32" stroke="#EF4444" stroke-width="2" stroke-dasharray="6,4"/>
+                    <text x="685" y="36" font-size="9" fill="#EF4444">7.5%</text>
+                    
+                    <!-- Vertical cutoff line (Dec 2025) -->
+                    <line x1="338" y1="15" x2="338" y2="185" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/>
+                    <text x="338" y="12" font-size="9" fill="#191F5E" text-anchor="middle">Dec '25</text>
+                    
+                    <!-- Actual line (Jan 25 - Dec 25) - solid -->
+                    <!-- Data: 2.35, 2.59, 2.55, 3.02, 3.25, 2.90, 3.07, 2.89, 2.98, 2.84, 2.86, 2.68 -->
+                    <polyline 
+                        points="62,133 88,119 114,121 140,103 166,94 192,107 218,100 244,107 270,104 296,109 322,108 338,116"
+                        fill="none" 
+                        stroke="#6E33FF" 
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                    
+                    <!-- Forecast line (Jan 26 - Dec 26) - dashed -->
+                    <!-- Data: 2.38, 2.57, 2.68, 2.89, 2.76, 2.62, 2.77, 2.74, 2.72, 2.61, 2.63, 2.65 -->
+                    <polyline 
+                        points="338,116 364,131 390,119 416,116 442,107 468,113 494,119 520,113 546,114 572,115 598,119 624,118 650,117"
+                        fill="none" 
+                        stroke="#6E33FF" 
+                        stroke-width="3"
+                        stroke-dasharray="8,5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                    
+                    <!-- Data points - Actuals -->
+                    <circle cx="62" cy="133" r="4" fill="#6E33FF"/>
+                    <circle cx="88" cy="119" r="4" fill="#6E33FF"/>
+                    <circle cx="114" cy="121" r="4" fill="#6E33FF"/>
+                    <circle cx="140" cy="103" r="4" fill="#6E33FF"/>
+                    <circle cx="166" cy="94" r="4" fill="#6E33FF"/>
+                    <circle cx="192" cy="107" r="4" fill="#6E33FF"/>
+                    <circle cx="218" cy="100" r="4" fill="#6E33FF"/>
+                    <circle cx="244" cy="107" r="4" fill="#6E33FF"/>
+                    <circle cx="270" cy="104" r="4" fill="#6E33FF"/>
+                    <circle cx="296" cy="109" r="4" fill="#6E33FF"/>
+                    <circle cx="322" cy="108" r="4" fill="#6E33FF"/>
+                    <circle cx="338" cy="116" r="5" fill="#6E33FF" stroke="white" stroke-width="2"/>
+                    
+                    <!-- Data points - Forecast (hollow) -->
+                    <circle cx="364" cy="131" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="390" cy="119" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="416" cy="116" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="442" cy="107" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="468" cy="113" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="494" cy="119" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="520" cy="113" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="546" cy="114" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="572" cy="115" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="598" cy="119" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="624" cy="118" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    <circle cx="650" cy="117" r="4" fill="white" stroke="#6E33FF" stroke-width="2"/>
+                    
+                    <!-- X-axis labels -->
+                    <text x="62" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="88" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">F</text>
+                    <text x="114" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="140" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="166" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="192" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="218" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="244" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="270" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">S</text>
+                    <text x="296" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">O</text>
+                    <text x="322" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">N</text>
+                    <text x="338" y="198" font-size="9" fill="#191F5E" text-anchor="middle" font-weight="bold">D</text>
+                    <text x="364" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="390" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">F</text>
+                    <text x="416" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="442" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="468" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="494" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="520" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="546" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="572" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">S</text>
+                    <text x="598" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">O</text>
+                    <text x="624" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">N</text>
+                    <text x="650" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">D</text>
+                    
+                    <!-- Year labels -->
+                    <text x="200" y="210" font-size="10" fill="#6b7280" text-anchor="middle">2025</text>
+                    <text x="507" y="210" font-size="10" fill="#6b7280" text-anchor="middle">2026</text>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Low Cost Location % Chart -->
+        <div class="card">
+            <div class="card-title">Low Cost Location as % of Total TS Cost (Actual vs Forecast)</div>
+            <div class="chart-legend">
+                <div class="legend-item"><div class="legend-line" style="background:#52A1FF;"></div><span>Actual</span></div>
+                <div class="legend-item"><div class="legend-line" style="background:repeating-linear-gradient(90deg, #52A1FF 0, #52A1FF 4px, transparent 4px, transparent 8px);"></div><span>Forecast</span></div>
+                <div class="legend-item"><div class="legend-line target"></div><span>Target (40%)</span></div>
+            </div>
+            <div class="chart-container">
+                <svg viewBox="0 0 700 200" style="width:100%;height:200px;">
+                    <!-- Grid lines -->
+                    <line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6" stroke-width="1"/>
+                    <line x1="50" y1="180" x2="680" y2="180" stroke="#f3f4f6" stroke-width="1"/>
+                    
+                    <!-- Y-axis labels -->
+                    <text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">40%</text>
+                    <text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">30%</text>
+                    <text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">20%</text>
+                    <text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">10%</text>
+                    <text x="45" y="184" font-size="10" fill="#9ca3af" text-anchor="end">0%</text>
+                    
+                    <!-- Target line (40%) -->
+                    <line x1="50" y1="20" x2="680" y2="20" stroke="#EF4444" stroke-width="2" stroke-dasharray="6,4"/>
+                    <text x="685" y="24" font-size="9" fill="#EF4444">40%</text>
+                    
+                    <!-- Vertical cutoff line (Dec 2025) -->
+                    <line x1="338" y1="15" x2="338" y2="185" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/>
+                    <text x="338" y="12" font-size="9" fill="#191F5E" text-anchor="middle">Dec '25</text>
+                    
+                    <!-- Actual line (Jan 25 - Dec 25) - solid -->
+                    <!-- Data: 0.94, 1.21, 1.13, 0.93, 6.06, 3.96, 4.32, 4.69, 4.05, 5.52, 5.97, 5.21 -->
+                    <!-- Scale: 0-40%, so multiply by 4 for position (180 - value*4) -->
+                    <polyline 
+                        points="62,176 88,175 114,175 140,176 166,156 192,164 218,163 244,161 270,164 296,158 322,156 338,159"
+                        fill="none" 
+                        stroke="#52A1FF" 
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                    
+                    <!-- Forecast line (Jan 26 - Dec 26) - dashed -->
+                    <!-- Data: 6.16, 6.63, 7.10, 7.41, 7.93, 8.32, 9.23, 9.36, 9.28, 9.62, 9.92, 9.45 -->
+                    <polyline 
+                        points="338,159 364,155 390,153 416,151 442,150 468,147 494,146 520,143 546,142 572,143 598,141 624,140 650,142"
+                        fill="none" 
+                        stroke="#52A1FF" 
+                        stroke-width="3"
+                        stroke-dasharray="8,5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                    
+                    <!-- Data points - Actuals -->
+                    <circle cx="62" cy="176" r="4" fill="#52A1FF"/>
+                    <circle cx="88" cy="175" r="4" fill="#52A1FF"/>
+                    <circle cx="114" cy="175" r="4" fill="#52A1FF"/>
+                    <circle cx="140" cy="176" r="4" fill="#52A1FF"/>
+                    <circle cx="166" cy="156" r="4" fill="#52A1FF"/>
+                    <circle cx="192" cy="164" r="4" fill="#52A1FF"/>
+                    <circle cx="218" cy="163" r="4" fill="#52A1FF"/>
+                    <circle cx="244" cy="161" r="4" fill="#52A1FF"/>
+                    <circle cx="270" cy="164" r="4" fill="#52A1FF"/>
+                    <circle cx="296" cy="158" r="4" fill="#52A1FF"/>
+                    <circle cx="322" cy="156" r="4" fill="#52A1FF"/>
+                    <circle cx="338" cy="159" r="5" fill="#52A1FF" stroke="white" stroke-width="2"/>
+                    
+                    <!-- Data points - Forecast (hollow) -->
+                    <circle cx="364" cy="155" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="390" cy="153" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="416" cy="151" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="442" cy="150" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="468" cy="147" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="494" cy="146" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="520" cy="143" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="546" cy="142" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="572" cy="143" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="598" cy="141" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="624" cy="140" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    <circle cx="650" cy="142" r="4" fill="white" stroke="#52A1FF" stroke-width="2"/>
+                    
+                    <!-- X-axis labels -->
+                    <text x="62" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="88" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">F</text>
+                    <text x="114" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="140" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="166" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="192" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="218" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="244" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="270" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">S</text>
+                    <text x="296" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">O</text>
+                    <text x="322" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">N</text>
+                    <text x="338" y="198" font-size="9" fill="#191F5E" text-anchor="middle" font-weight="bold">D</text>
+                    <text x="364" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="390" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">F</text>
+                    <text x="416" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="442" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="468" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">M</text>
+                    <text x="494" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="520" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">J</text>
+                    <text x="546" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">A</text>
+                    <text x="572" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">S</text>
+                    <text x="598" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">O</text>
+                    <text x="624" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">N</text>
+                    <text x="650" y="198" font-size="9" fill="#9ca3af" text-anchor="middle">D</text>
+                    
+                    <!-- Year labels -->
+                    <text x="200" y="210" font-size="10" fill="#6b7280" text-anchor="middle">2025</text>
+                    <text x="507" y="210" font-size="10" fill="#6b7280" text-anchor="middle">2026</text>
+                </svg>
+            </div>
         </div>
     </div>
 
@@ -490,7 +732,7 @@
 </div>
 
 <footer class="footer">
-    <div>Data Source: Salesforce, ServiceNow</div>
+    <div>Data Source: Salesforce, Adaptive</div>
     <div>Due: Jan 23, 2026 | Owner: D&I Team</div>
 </footer>
 
