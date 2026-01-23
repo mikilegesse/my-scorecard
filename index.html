@@ -25,12 +25,13 @@
         .page.active { display: block; }
         
         /* KPI Cards */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
         .kpi { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid; }
         .kpi.teal { border-color: #13EAC1; }
         .kpi.purple { border-color: #6E33FF; }
         .kpi.blue { border-color: #52A1FF; }
         .kpi.yellow { border-color: #F1CB61; }
+        .kpi.orange { border-color: #F59E0B; }
         .kpi-label { font-size: 11px; text-transform: uppercase; color: #6b7280; font-weight: 600; letter-spacing: 0.5px; }
         .kpi-value { font-size: 32px; font-weight: bold; color: #191F5E; margin: 8px 0 4px; }
         .kpi-target { font-size: 12px; color: #9ca3af; }
@@ -55,8 +56,6 @@
         /* Sparkline */
         .spark { display: flex; align-items: flex-end; gap: 6px; height: 50px; }
         .spark-bar { flex: 1; border-radius: 3px 3px 0 0; min-height: 4px; }
-        .spark-labels { display: flex; gap: 6px; margin-top: 8px; }
-        .spark-labels span { flex: 1; font-size: 10px; color: #9ca3af; text-align: center; }
         
         /* Stats */
         .stats { display: flex; justify-content: space-around; padding: 16px 0; }
@@ -121,7 +120,10 @@
         /* Footer */
         .footer { padding: 16px 24px; background: white; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
         
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
+            .kpi-row { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
             .kpi-row { grid-template-columns: repeat(2, 1fr); }
             .row, .row-2 { grid-template-columns: 1fr; }
             .voc-row { grid-template-columns: repeat(3, 1fr); }
@@ -149,28 +151,34 @@
 <div class="page active">
     <div class="kpi-row">
         <div class="kpi teal">
-            <div class="kpi-label">CSAT Score</div>
-            <div class="kpi-value">4.2</div>
-            <div class="kpi-target">Target: 4.5</div>
+            <div class="kpi-label">CSAT SCORE</div>
+            <div class="kpi-value">88.42%</div>
+            <div class="kpi-target">Target: 90%</div>
             <div class="kpi-trend up">↑ 2.5% vs LW</div>
         </div>
         <div class="kpi purple">
             <div class="kpi-label">TTR</div>
-            <div class="kpi-value">3.2d</div>
-            <div class="kpi-target">Target: 3.0d</div>
+            <div class="kpi-value">46.45%</div>
+            <div class="kpi-target">Target: 80%</div>
             <div class="kpi-trend down">↓ 5% vs LW</div>
         </div>
         <div class="kpi blue">
             <div class="kpi-label">TTFR</div>
-            <div class="kpi-value">2.1h</div>
-            <div class="kpi-target">Target: 4.0h</div>
+            <div class="kpi-value">32.99%</div>
+            <div class="kpi-target">Target: 80%</div>
             <div class="kpi-trend up">↑ 12% vs LW</div>
         </div>
         <div class="kpi yellow">
-            <div class="kpi-label">Backlog</div>
-            <div class="kpi-value">847</div>
-            <div class="kpi-target">Target: &lt;800</div>
-            <div class="kpi-trend up">↓ 3% vs LW</div>
+            <div class="kpi-label">OPEN BACKLOG</div>
+            <div class="kpi-value">10K</div>
+            <div class="kpi-target">Target: &lt;8K</div>
+            <div class="kpi-trend down">↑ 3% vs LW</div>
+        </div>
+        <div class="kpi orange">
+            <div class="kpi-label">Unassigned Cases Tech Support</div>
+            <div class="kpi-value">28</div>
+            <div class="kpi-target">Target: 0</div>
+            <div class="kpi-trend up">↓ 10% vs LW</div>
         </div>
     </div>
 
@@ -192,62 +200,62 @@
                         <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.9;"></div>
                         <div class="spark-bar" style="height:100%;background:#13EAC1;opacity:0.95;"></div>
                         <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.97;"></div>
-                        <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.98;"></div>
-                        <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:1;"></div>
+                        <div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:88%;background:#13EAC1;opacity:1;"></div>
                     </div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTR (days)</div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTR %</div>
                     <div class="spark">
-                        <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.5;"></div>
-                        <div class="spark-bar" style="height:90%;background:#6E33FF;opacity:0.55;"></div>
-                        <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.6;"></div>
-                        <div class="spark-bar" style="height:80%;background:#6E33FF;opacity:0.65;"></div>
-                        <div class="spark-bar" style="height:85%;background:#6E33FF;opacity:0.7;"></div>
-                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.75;"></div>
-                        <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.8;"></div>
-                        <div class="spark-bar" style="height:65%;background:#6E33FF;opacity:0.85;"></div>
-                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.9;"></div>
-                        <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.95;"></div>
-                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:0.97;"></div>
-                        <div class="spark-bar" style="height:65%;background:#6E33FF;opacity:0.98;"></div>
-                        <div class="spark-bar" style="height:70%;background:#6E33FF;opacity:1;"></div>
+                        <div class="spark-bar" style="height:40%;background:#6E33FF;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:45%;background:#6E33FF;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:42%;background:#6E33FF;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:48%;background:#6E33FF;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:44%;background:#6E33FF;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:50%;background:#6E33FF;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:46%;background:#6E33FF;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:48%;background:#6E33FF;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:45%;background:#6E33FF;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:47%;background:#6E33FF;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:46%;background:#6E33FF;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:45%;background:#6E33FF;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:46%;background:#6E33FF;opacity:1;"></div>
                     </div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTFR (hrs)</div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTFR %</div>
                     <div class="spark">
-                        <div class="spark-bar" style="height:100%;background:#52A1FF;opacity:0.5;"></div>
-                        <div class="spark-bar" style="height:85%;background:#52A1FF;opacity:0.55;"></div>
-                        <div class="spark-bar" style="height:90%;background:#52A1FF;opacity:0.6;"></div>
-                        <div class="spark-bar" style="height:75%;background:#52A1FF;opacity:0.65;"></div>
-                        <div class="spark-bar" style="height:70%;background:#52A1FF;opacity:0.7;"></div>
-                        <div class="spark-bar" style="height:60%;background:#52A1FF;opacity:0.75;"></div>
-                        <div class="spark-bar" style="height:65%;background:#52A1FF;opacity:0.8;"></div>
-                        <div class="spark-bar" style="height:55%;background:#52A1FF;opacity:0.85;"></div>
-                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:0.9;"></div>
-                        <div class="spark-bar" style="height:55%;background:#52A1FF;opacity:0.95;"></div>
-                        <div class="spark-bar" style="height:45%;background:#52A1FF;opacity:0.97;"></div>
-                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:0.98;"></div>
-                        <div class="spark-bar" style="height:50%;background:#52A1FF;opacity:1;"></div>
+                        <div class="spark-bar" style="height:28%;background:#52A1FF;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:30%;background:#52A1FF;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:29%;background:#52A1FF;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:32%;background:#52A1FF;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:30%;background:#52A1FF;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:34%;background:#52A1FF;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:31%;background:#52A1FF;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:33%;background:#52A1FF;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:32%;background:#52A1FF;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:34%;background:#52A1FF;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:32%;background:#52A1FF;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:33%;background:#52A1FF;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:33%;background:#52A1FF;opacity:1;"></div>
                     </div>
                 </div>
                 <div>
                     <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">Backlog</div>
                     <div class="spark">
-                        <div class="spark-bar" style="height:100%;background:#F1CB61;opacity:0.5;"></div>
-                        <div class="spark-bar" style="height:95%;background:#F1CB61;opacity:0.55;"></div>
-                        <div class="spark-bar" style="height:88%;background:#F1CB61;opacity:0.6;"></div>
-                        <div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.65;"></div>
-                        <div class="spark-bar" style="height:90%;background:#F1CB61;opacity:0.7;"></div>
-                        <div class="spark-bar" style="height:82%;background:#F1CB61;opacity:0.75;"></div>
-                        <div class="spark-bar" style="height:78%;background:#F1CB61;opacity:0.8;"></div>
-                        <div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.85;"></div>
-                        <div class="spark-bar" style="height:80%;background:#F1CB61;opacity:0.9;"></div>
-                        <div class="spark-bar" style="height:75%;background:#F1CB61;opacity:0.95;"></div>
-                        <div class="spark-bar" style="height:72%;background:#F1CB61;opacity:0.97;"></div>
-                        <div class="spark-bar" style="height:75%;background:#F1CB61;opacity:0.98;"></div>
-                        <div class="spark-bar" style="height:73%;background:#F1CB61;opacity:1;"></div>
+                        <div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.5;"></div>
+                        <div class="spark-bar" style="height:88%;background:#F1CB61;opacity:0.55;"></div>
+                        <div class="spark-bar" style="height:90%;background:#F1CB61;opacity:0.6;"></div>
+                        <div class="spark-bar" style="height:92%;background:#F1CB61;opacity:0.65;"></div>
+                        <div class="spark-bar" style="height:95%;background:#F1CB61;opacity:0.7;"></div>
+                        <div class="spark-bar" style="height:93%;background:#F1CB61;opacity:0.75;"></div>
+                        <div class="spark-bar" style="height:96%;background:#F1CB61;opacity:0.8;"></div>
+                        <div class="spark-bar" style="height:98%;background:#F1CB61;opacity:0.85;"></div>
+                        <div class="spark-bar" style="height:97%;background:#F1CB61;opacity:0.9;"></div>
+                        <div class="spark-bar" style="height:99%;background:#F1CB61;opacity:0.95;"></div>
+                        <div class="spark-bar" style="height:100%;background:#F1CB61;opacity:0.97;"></div>
+                        <div class="spark-bar" style="height:100%;background:#F1CB61;opacity:0.98;"></div>
+                        <div class="spark-bar" style="height:100%;background:#F1CB61;opacity:1;"></div>
                     </div>
                 </div>
             </div>
@@ -255,16 +263,16 @@
         <div class="card">
             <div class="card-title">Goal Attainment</div>
             <div class="progress-item">
-                <div class="progress-header"><span class="progress-label">CSAT</span><span class="progress-value">93 / 100</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width:93%;background:#13EAC1;"></div></div>
+                <div class="progress-header"><span class="progress-label">CSAT</span><span class="progress-value">98 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:98%;background:#13EAC1;"></div></div>
             </div>
             <div class="progress-item">
-                <div class="progress-header"><span class="progress-label">TTR</span><span class="progress-value">94 / 100</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width:94%;background:#6E33FF;"></div></div>
+                <div class="progress-header"><span class="progress-label">TTR</span><span class="progress-value">58 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:58%;background:#6E33FF;"></div></div>
             </div>
             <div class="progress-item">
-                <div class="progress-header"><span class="progress-label">TTFR</span><span class="progress-value">100 / 100</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width:100%;background:#52A1FF;"></div></div>
+                <div class="progress-header"><span class="progress-label">TTFR</span><span class="progress-value">41 / 100</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:41%;background:#52A1FF;"></div></div>
             </div>
             <div class="progress-item">
                 <div class="progress-header"><span class="progress-label">Defect %</span><span class="progress-value">83 / 100</span></div>
@@ -277,7 +285,7 @@
         <div class="card">
             <div class="card-title">Cases by Status</div>
             <div class="stats">
-                <div class="stat"><div class="stat-val blue">847</div><div class="stat-lbl">Open</div></div>
+                <div class="stat"><div class="stat-val blue">10K</div><div class="stat-lbl">Open</div></div>
                 <div class="stat"><div class="stat-val teal">1,234</div><div class="stat-lbl">Closed (MTD)</div></div>
                 <div class="stat"><div class="stat-val purple">156</div><div class="stat-lbl">Escalated</div></div>
             </div>
@@ -297,9 +305,9 @@
 <div class="page">
     <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
         <div class="kpi teal">
-            <div class="kpi-label">Overall CSAT</div>
-            <div class="kpi-value">4.2 / 5.0</div>
-            <div class="kpi-target">Target: 4.5</div>
+            <div class="kpi-label">CSAT SCORE</div>
+            <div class="kpi-value">88.42%</div>
+            <div class="kpi-target">Target: 90%</div>
             <div class="kpi-trend up">↑ 2.5% vs LW</div>
         </div>
         <div class="kpi blue">
@@ -338,8 +346,8 @@
                 <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.9;"></div>
                 <div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.93;"></div>
                 <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.96;"></div>
-                <div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.98;"></div>
-                <div class="spark-bar" style="height:80%;background:#13EAC1;opacity:1;"></div>
+                <div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.98;"></div>
+                <div class="spark-bar" style="height:88%;background:#13EAC1;opacity:1;"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:#9ca3af;">
                 <span>Week 1</span><span>Week 13</span>
@@ -361,24 +369,24 @@
 
 <!-- PAGE 3: OPERATIONAL EXCELLENCE -->
 <div class="page">
-    <div class="kpi-row">
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
         <div class="kpi purple">
             <div class="kpi-label">TTR</div>
-            <div class="kpi-value">3.2d</div>
-            <div class="kpi-target">Target: 3.0d</div>
+            <div class="kpi-value">46.45%</div>
+            <div class="kpi-target">Target: 80%</div>
             <div class="kpi-trend down">↓ 5% vs LW</div>
         </div>
         <div class="kpi blue">
             <div class="kpi-label">TTFR</div>
-            <div class="kpi-value">2.1h</div>
-            <div class="kpi-target">Target: 4.0h</div>
+            <div class="kpi-value">32.99%</div>
+            <div class="kpi-target">Target: 80%</div>
             <div class="kpi-trend up">↑ 12% vs LW</div>
         </div>
         <div class="kpi yellow">
-            <div class="kpi-label">Open Backlog</div>
-            <div class="kpi-value">847</div>
-            <div class="kpi-target">cases</div>
-            <div class="kpi-trend up">↓ 3% vs LW</div>
+            <div class="kpi-label">OPEN BACKLOG</div>
+            <div class="kpi-value">10K</div>
+            <div class="kpi-target">Target: &lt;8K</div>
+            <div class="kpi-trend down">↑ 3% vs LW</div>
         </div>
         <div class="kpi teal">
             <div class="kpi-label">% to Defect</div>
@@ -392,20 +400,20 @@
         <div class="card">
             <div class="card-title">Case Aging Distribution</div>
             <div class="aging">
-                <div class="aging-item"><div class="aging-val">312</div><div class="aging-bar" style="height:100px;background:#13EAC1;"></div><div class="aging-lbl">0-7d</div></div>
-                <div class="aging-item"><div class="aging-val">198</div><div class="aging-bar" style="height:63px;background:#52A1FF;"></div><div class="aging-lbl">8-14d</div></div>
-                <div class="aging-item"><div class="aging-val">156</div><div class="aging-bar" style="height:50px;background:#F1CB61;"></div><div class="aging-lbl">15-30d</div></div>
-                <div class="aging-item"><div class="aging-val">98</div><div class="aging-bar" style="height:31px;background:#A785FF;"></div><div class="aging-lbl">31-60d</div></div>
-                <div class="aging-item"><div class="aging-val">83</div><div class="aging-bar" style="height:27px;background:#6E33FF;"></div><div class="aging-lbl">60+d</div></div>
+                <div class="aging-item"><div class="aging-val">3.1K</div><div class="aging-bar" style="height:100px;background:#13EAC1;"></div><div class="aging-lbl">0-7d</div></div>
+                <div class="aging-item"><div class="aging-val">2.1K</div><div class="aging-bar" style="height:68px;background:#52A1FF;"></div><div class="aging-lbl">8-14d</div></div>
+                <div class="aging-item"><div class="aging-val">1.8K</div><div class="aging-bar" style="height:58px;background:#F1CB61;"></div><div class="aging-lbl">15-30d</div></div>
+                <div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#A785FF;"></div><div class="aging-lbl">31-60d</div></div>
+                <div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#6E33FF;"></div><div class="aging-lbl">60+d</div></div>
             </div>
         </div>
         <div class="card">
             <div class="card-title">TTFR - % to Goal (80%)</div>
-            <div class="ttfr-row"><div class="ttfr-name">OnBase</div><div class="ttfr-track"><div class="ttfr-fill" style="width:92%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">92%</div></div>
-            <div class="ttfr-row"><div class="ttfr-name">Perceptive</div><div class="ttfr-track"><div class="ttfr-fill" style="width:85%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">85%</div></div>
-            <div class="ttfr-row"><div class="ttfr-name">Alfresco</div><div class="ttfr-track"><div class="ttfr-fill" style="width:78%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">78%</div></div>
-            <div class="ttfr-row"><div class="ttfr-name">Nuxeo</div><div class="ttfr-track"><div class="ttfr-fill" style="width:81%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">81%</div></div>
-            <div class="ttfr-row"><div class="ttfr-name">Brainware</div><div class="ttfr-track"><div class="ttfr-fill" style="width:88%;background:#13EAC1;"></div></div><div class="ttfr-val" style="color:#065F46;">88%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">OnBase</div><div class="ttfr-track"><div class="ttfr-fill" style="width:45%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">45%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Perceptive</div><div class="ttfr-track"><div class="ttfr-fill" style="width:38%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">38%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Alfresco</div><div class="ttfr-track"><div class="ttfr-fill" style="width:28%;background:#EF4444;"></div></div><div class="ttfr-val" style="color:#991B1B;">28%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Nuxeo</div><div class="ttfr-track"><div class="ttfr-fill" style="width:32%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">32%</div></div>
+            <div class="ttfr-row"><div class="ttfr-name">Brainware</div><div class="ttfr-track"><div class="ttfr-fill" style="width:35%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">35%</div></div>
             <div class="ttfr-note">Goal: 80% of cases first response within 4 hours</div>
         </div>
     </div>
@@ -417,9 +425,9 @@
             <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:0.7;"></div>
             <div class="spark-bar" style="height:75%;background:#6E33FF;opacity:0.75;"></div>
             <div class="spark-bar" style="height:88%;background:#6E33FF;opacity:0.8;"></div>
-            <div class="spark-bar" style="height:110%;background:#6E33FF;opacity:0.85;"></div>
+            <div class="spark-bar" style="height:95%;background:#6E33FF;opacity:0.85;"></div>
             <div class="spark-bar" style="height:85%;background:#6E33FF;opacity:0.9;"></div>
-            <div class="spark-bar" style="height:100%;background:#6E33FF;opacity:1;"></div>
+            <div class="spark-bar" style="height:90%;background:#6E33FF;opacity:1;"></div>
         </div>
         <div style="display:flex;justify-content:space-around;margin-top:8px;font-size:10px;color:#9ca3af;">
             <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>Current</span>
@@ -429,7 +437,7 @@
 
 <!-- PAGE 4: COST & EMERGING -->
 <div class="page">
-    <div class="warning">⚠️ Cost metrics pending Finance data from Mindy. Placeholder values shown below.</div>
+    <div class="warning">⚠️ Cost metrics based on Dec 2025 actuals. Jan 2026+ values are forecasts.</div>
 
     <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
         <div class="kpi yellow">
@@ -439,16 +447,16 @@
             <div class="kpi-trend" style="color:#9ca3af;">Pending Finance</div>
         </div>
         <div class="kpi purple">
-            <div class="kpi-label">Support Cost % Rev</div>
-            <div class="kpi-value" style="color:#d1d5db;">TBD</div>
+            <div class="kpi-label">Support Cost % of Revenue</div>
+            <div class="kpi-value">2.68%</div>
             <div class="kpi-target">Target: 7.5%</div>
-            <div class="kpi-trend" style="color:#9ca3af;">Pending Finance</div>
+            <div class="kpi-trend up">✓ Under budget</div>
         </div>
         <div class="kpi blue">
             <div class="kpi-label">Low Cost Location %</div>
-            <div class="kpi-value" style="color:#d1d5db;">TBD</div>
+            <div class="kpi-value">5.21%</div>
             <div class="kpi-target">Target: 40%</div>
-            <div class="kpi-trend" style="color:#9ca3af;">Requires Workday</div>
+            <div class="kpi-trend down">↑ Growing slowly</div>
         </div>
     </div>
 
