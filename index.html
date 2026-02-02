@@ -21,6 +21,8 @@
         .page { display: none; padding: 24px; }
         .page.active { display: block; }
         
+        .time-period { background: #191F5E; color: white; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+        
         .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
         .kpi-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
         .kpi-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -39,6 +41,7 @@
         
         .row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
         .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
         .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .card-title { font-size: 14px; font-weight: 600; color: #191F5E; margin-bottom: 16px; }
         
@@ -103,6 +106,13 @@
         
         .footer { padding: 16px 24px; background: white; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; display: flex; justify-content: space-between; }
         
+        /* Escalation styles */
+        .esc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+        .esc-item { padding: 16px; background: #f9fafb; border-radius: 8px; }
+        .esc-label { font-size: 11px; color: #6b7280; text-transform: uppercase; margin-bottom: 8px; }
+        .esc-value { font-size: 28px; font-weight: bold; color: #191F5E; }
+        .esc-sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+        
         /* VSEM Styles */
         .pillar-section { margin-bottom: 24px; }
         .pillar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
@@ -114,30 +124,25 @@
         .pillar-badge.finance { background: #191F5E; }
         
         .metrics-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .metrics-table th { background: #f9fafb; padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; }
-        .metrics-table th:nth-child(2), .metrics-table th:nth-child(3), .metrics-table th:nth-child(4) { text-align: center; }
-        .metrics-table td { padding: 12px 16px; font-size: 13px; border-top: 1px solid #f3f4f6; }
-        .metrics-table td:nth-child(2), .metrics-table td:nth-child(3), .metrics-table td:nth-child(4) { text-align: center; font-weight: 600; }
+        .metrics-table th { background: #191F5E; color: white; padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .metrics-table th:first-child { text-align: left; }
+        .metrics-table td { padding: 10px 12px; font-size: 12px; border-top: 1px solid #f3f4f6; text-align: center; }
+        .metrics-table td:first-child { text-align: left; font-weight: 500; color: #191F5E; }
         .metrics-table tr:hover { background: #f9fafb; }
-        .metric-indent { padding-left: 32px !important; color: #6b7280; }
-        .fy25 { color: #6E33FF; }
-        .fy26 { color: #191F5E; }
-        .status-good { color: #065F46; background: #D1FAE5; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
-        .status-risk { color: #92400E; background: #FEF3C7; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
-        .status-bad { color: #991B1B; background: #FEE2E2; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
+        .metric-indent { padding-left: 24px !important; color: #6b7280 !important; font-weight: 400 !important; }
         
-        .vsem-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-        .vsem-kpi { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); text-align: center; }
-        .vsem-kpi-label { font-size: 11px; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; }
-        .vsem-kpi-value { font-size: 28px; font-weight: bold; color: #191F5E; }
-        .vsem-kpi-target { font-size: 11px; color: #9ca3af; margin-top: 4px; }
-        .vsem-kpi-compare { display: flex; justify-content: center; gap: 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f3f4f6; }
-        .vsem-kpi-fy { text-align: center; }
-        .vsem-kpi-fy-label { font-size: 10px; color: #9ca3af; }
-        .vsem-kpi-fy-val { font-size: 14px; font-weight: 600; }
+        .trend-up { color: #065F46; font-weight: bold; }
+        .trend-down { color: #991B1B; font-weight: bold; }
+        .trend-flat { color: #6b7280; }
         
-        @media (max-width: 1100px) { .kpi-row, .vsem-kpi-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .kpi-row, .kpi-row-3, .kpi-row-4, .vsem-kpi-grid { grid-template-columns: 1fr; } .row, .row-2 { grid-template-columns: 1fr; } .voc-row { grid-template-columns: repeat(2, 1fr); } }
+        .status-green { color: #065F46; background: #D1FAE5; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+        .status-yellow { color: #92400E; background: #FEF3C7; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+        .status-red { color: #991B1B; background: #FEE2E2; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+        
+        .quarter-header { background: #f3f4f6 !important; color: #191F5E !important; font-size: 9px !important; }
+        
+        @media (max-width: 1100px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .kpi-row, .kpi-row-3, .kpi-row-4 { grid-template-columns: 1fr; } .row, .row-2, .row-3 { grid-template-columns: 1fr; } .voc-row { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -145,9 +150,9 @@
 <header class="header">
     <div style="display:flex;align-items:center;">
         <h1>TS Scorecard</h1>
-        <span class="badge">v1.0 DRAFT</span>
+        <span class="badge">v2.0 DRAFT</span>
     </div>
-    <span>Last Updated: Dec 2025 (Actuals) | FY26 Targets</span>
+    <span>Data as of: Jan 2026 | FY26 Targets</span>
 </header>
 
 <nav class="tabs">
@@ -160,12 +165,14 @@
 
 <!-- PAGE 1: EXECUTIVE OVERVIEW -->
 <div class="page active">
+    <div class="time-period">📅 Current Period: Jan 2026 | Comparison: Dec 2025</div>
+    
     <div class="kpi-row">
-        <div class="kpi teal"><div class="kpi-label">CSAT SCORE</div><div class="kpi-value">88.42%</div><div class="kpi-target">Target: 95%/90%</div><div class="kpi-trend up">↑ 2.5% vs LW</div></div>
-        <div class="kpi purple"><div class="kpi-label">TTR</div><div class="kpi-value">46.45%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend down">↓ 5% vs LW</div></div>
-        <div class="kpi blue"><div class="kpi-label">TTFR</div><div class="kpi-value">32.99%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend up">↑ 12% vs LW</div></div>
-        <div class="kpi yellow"><div class="kpi-label">COST PER CASE</div><div class="kpi-value">$228</div><div class="kpi-target">Target: $217</div><div class="kpi-trend down">$11 over</div></div>
-        <div class="kpi orange"><div class="kpi-label">LCOL % Headcount</div><div class="kpi-value">22%</div><div class="kpi-target">Target: 30%</div><div class="kpi-trend up">↑ Growing</div></div>
+        <div class="kpi teal"><div class="kpi-label">CSAT SCORE</div><div class="kpi-value">88.42%</div><div class="kpi-target">Target: 95%/90%</div><div class="kpi-trend up">↑ 2.5% vs Dec</div></div>
+        <div class="kpi purple"><div class="kpi-label">TTR</div><div class="kpi-value">46.45%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend down">↓ 5% vs Dec</div></div>
+        <div class="kpi blue"><div class="kpi-label">TTFR</div><div class="kpi-value">32.99%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend up">↑ 12% vs Dec</div></div>
+        <div class="kpi yellow"><div class="kpi-label">COST PER CASE</div><div class="kpi-value">TBD</div><div class="kpi-target">Target: TBD</div><div class="kpi-trend">Pending Finance</div></div>
+        <div class="kpi orange"><div class="kpi-label">LCOL % Headcount</div><div class="kpi-value">23.9%</div><div class="kpi-target">Target: 30%</div><div class="kpi-trend up">↑ from 22%</div></div>
     </div>
 
     <div class="row">
@@ -175,62 +182,94 @@
                 <div><div style="font-size:11px;color:#6b7280;margin-bottom:8px;">CSAT</div><div class="spark"><div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.5;"></div><div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.6;"></div><div class="spark-bar" style="height:75%;background:#13EAC1;opacity:0.65;"></div><div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.7;"></div><div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.75;"></div><div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.8;"></div><div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.85;"></div><div class="spark-bar" style="height:88%;background:#13EAC1;opacity:1;"></div></div></div>
                 <div><div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTR %</div><div class="spark"><div class="spark-bar" style="height:40%;background:#6E33FF;opacity:0.5;"></div><div class="spark-bar" style="height:45%;background:#6E33FF;opacity:0.6;"></div><div class="spark-bar" style="height:42%;background:#6E33FF;opacity:0.65;"></div><div class="spark-bar" style="height:48%;background:#6E33FF;opacity:0.7;"></div><div class="spark-bar" style="height:44%;background:#6E33FF;opacity:0.75;"></div><div class="spark-bar" style="height:50%;background:#6E33FF;opacity:0.8;"></div><div class="spark-bar" style="height:46%;background:#6E33FF;opacity:0.85;"></div><div class="spark-bar" style="height:46%;background:#6E33FF;opacity:1;"></div></div></div>
                 <div><div style="font-size:11px;color:#6b7280;margin-bottom:8px;">TTFR %</div><div class="spark"><div class="spark-bar" style="height:28%;background:#52A1FF;opacity:0.5;"></div><div class="spark-bar" style="height:30%;background:#52A1FF;opacity:0.6;"></div><div class="spark-bar" style="height:29%;background:#52A1FF;opacity:0.65;"></div><div class="spark-bar" style="height:32%;background:#52A1FF;opacity:0.7;"></div><div class="spark-bar" style="height:31%;background:#52A1FF;opacity:0.75;"></div><div class="spark-bar" style="height:34%;background:#52A1FF;opacity:0.8;"></div><div class="spark-bar" style="height:32%;background:#52A1FF;opacity:0.85;"></div><div class="spark-bar" style="height:33%;background:#52A1FF;opacity:1;"></div></div></div>
-                <div><div style="font-size:11px;color:#6b7280;margin-bottom:8px;">Cost/Case</div><div class="spark"><div class="spark-bar" style="height:95%;background:#F1CB61;opacity:0.5;"></div><div class="spark-bar" style="height:92%;background:#F1CB61;opacity:0.6;"></div><div class="spark-bar" style="height:88%;background:#F1CB61;opacity:0.65;"></div><div class="spark-bar" style="height:90%;background:#F1CB61;opacity:0.7;"></div><div class="spark-bar" style="height:85%;background:#F1CB61;opacity:0.75;"></div><div class="spark-bar" style="height:88%;background:#F1CB61;opacity:0.8;"></div><div class="spark-bar" style="height:84%;background:#F1CB61;opacity:0.85;"></div><div class="spark-bar" style="height:82%;background:#F1CB61;opacity:1;"></div></div></div>
+                <div><div style="font-size:11px;color:#6b7280;margin-bottom:8px;">LCOL %</div><div class="spark"><div class="spark-bar" style="height:40%;background:#F1CB61;opacity:0.5;"></div><div class="spark-bar" style="height:50%;background:#F1CB61;opacity:0.6;"></div><div class="spark-bar" style="height:55%;background:#F1CB61;opacity:0.65;"></div><div class="spark-bar" style="height:60%;background:#F1CB61;opacity:0.7;"></div><div class="spark-bar" style="height:65%;background:#F1CB61;opacity:0.75;"></div><div class="spark-bar" style="height:70%;background:#F1CB61;opacity:0.8;"></div><div class="spark-bar" style="height:73%;background:#F1CB61;opacity:0.85;"></div><div class="spark-bar" style="height:80%;background:#F1CB61;opacity:1;"></div></div></div>
             </div>
         </div>
         <div class="card">
-            <div class="card-title">Goal Attainment</div>
+            <div class="card-title">Goal Attainment (vs FY26 Target)</div>
             <div class="progress-item"><div class="progress-header"><span class="progress-label">CSAT</span><span class="progress-value">98%</span></div><div class="progress-track"><div class="progress-fill" style="width:98%;background:#13EAC1;"></div></div></div>
             <div class="progress-item"><div class="progress-header"><span class="progress-label">TTR</span><span class="progress-value">58%</span></div><div class="progress-track"><div class="progress-fill" style="width:58%;background:#6E33FF;"></div></div></div>
             <div class="progress-item"><div class="progress-header"><span class="progress-label">TTFR</span><span class="progress-value">41%</span></div><div class="progress-track"><div class="progress-fill" style="width:41%;background:#52A1FF;"></div></div></div>
-            <div class="progress-item"><div class="progress-header"><span class="progress-label">Cost/Case</span><span class="progress-value">95%</span></div><div class="progress-track"><div class="progress-fill" style="width:95%;background:#F1CB61;"></div></div></div>
+            <div class="progress-item"><div class="progress-header"><span class="progress-label">LCOL %</span><span class="progress-value">80%</span></div><div class="progress-track"><div class="progress-fill" style="width:80%;background:#F1CB61;"></div></div></div>
         </div>
     </div>
 
-    <div class="row-2">
-        <div class="card"><div class="card-title">Cases by Status</div><div class="stats"><div class="stat"><div class="stat-val blue">10K</div><div class="stat-lbl">Open</div></div><div class="stat"><div class="stat-val teal">1,234</div><div class="stat-lbl">Closed (MTD)</div></div><div class="stat"><div class="stat-val purple">156</div><div class="stat-lbl">Escalated</div></div></div></div>
-        <div class="card"><div class="card-title">Defect-Linked Cases</div><div class="defect-row"><div class="defect-item"><div class="defect-val purple">18%</div><div class="defect-lbl">% Tied to Defect</div></div><div class="defect-item"><div class="defect-val grey">312</div><div class="defect-lbl">Defect Cases (WoW)</div></div><div class="defect-badge">↓ 2% vs LW</div></div></div>
+    <div class="row-3">
+        <div class="card"><div class="card-title">Cases by Status</div><div class="stats"><div class="stat"><div class="stat-val blue">10K</div><div class="stat-lbl">Open</div></div><div class="stat"><div class="stat-val teal">1,234</div><div class="stat-lbl">Closed (MTD)</div></div></div></div>
+        <div class="card">
+            <div class="card-title">Escalations (Jan 2026)</div>
+            <div class="esc-grid">
+                <div class="esc-item"><div class="esc-label">RFA</div><div class="esc-value">98</div><div class="esc-sub">Request for Assistance</div></div>
+                <div class="esc-item"><div class="esc-label">Manager</div><div class="esc-value">58</div><div class="esc-sub">Manager Escalation</div></div>
+                <div class="esc-item" style="background:#E0E7FF;"><div class="esc-label">Total</div><div class="esc-value" style="color:#6E33FF;">156</div><div class="esc-sub">All Escalations</div></div>
+            </div>
+        </div>
+        <div class="card"><div class="card-title">Defect-Linked Cases</div><div class="defect-row"><div class="defect-item"><div class="defect-val purple">18%</div><div class="defect-lbl">% Tied to Defect</div></div><div class="defect-badge">↓ 2% vs Dec</div></div></div>
     </div>
 </div>
 
 <!-- PAGE 2: CUSTOMER EXPERIENCE -->
 <div class="page">
+    <div class="time-period">📅 Current Period: Jan 2026 | Comparison: Dec 2025 | FY: Jul 2025 - Jun 2026</div>
+    
     <div class="kpi-row-3">
-        <div class="kpi teal"><div class="kpi-label">CSAT SCORE</div><div class="kpi-value">92.9%</div><div class="kpi-target">Target: 95%/90%</div><div class="kpi-trend up">↑ 2.5% vs LW</div></div>
+        <div class="kpi teal"><div class="kpi-label">CSAT SCORE</div><div class="kpi-value">92.9%</div><div class="kpi-target">Target: 95%/90%</div><div class="kpi-trend up">↑ 2.5% vs Dec</div></div>
         <div class="kpi blue"><div class="kpi-label">Response Count</div><div class="kpi-value">1,847</div><div class="kpi-target">surveys received</div></div>
-        <div class="kpi purple"><div class="kpi-label">Response Rate</div><div class="kpi-value">32%</div><div class="kpi-target">Target: 35%</div><div class="kpi-trend up">↑ 1.2% vs LW</div></div>
+        <div class="kpi purple"><div class="kpi-label">Response Rate</div><div class="kpi-value">32%</div><div class="kpi-target">Target: 35%</div><div class="kpi-trend up">↑ 1.2% vs Dec</div></div>
     </div>
     <div class="row-2">
-        <div class="card"><div class="card-title">CSAT by Product Line</div><div class="prod-row"><div class="prod-name">OnBase</div><div class="prod-track"><div class="prod-fill" style="width:88%;background:#13EAC1;"></div></div><div class="prod-score">4.4</div><div class="prod-n">n=523</div></div><div class="prod-row"><div class="prod-name">Perceptive</div><div class="prod-track"><div class="prod-fill" style="width:82%;background:#13EAC1;"></div></div><div class="prod-score">4.1</div><div class="prod-n">n=312</div></div><div class="prod-row"><div class="prod-name">Alfresco</div><div class="prod-track"><div class="prod-fill" style="width:78%;background:#13EAC1;"></div></div><div class="prod-score">3.9</div><div class="prod-n">n=287</div></div><div class="prod-row"><div class="prod-name">Nuxeo</div><div class="prod-track"><div class="prod-fill" style="width:80%;background:#13EAC1;"></div></div><div class="prod-score">4.0</div><div class="prod-n">n=198</div></div><div class="prod-row"><div class="prod-name">Brainware</div><div class="prod-track"><div class="prod-fill" style="width:86%;background:#13EAC1;"></div></div><div class="prod-score">4.3</div><div class="prod-n">n=156</div></div></div>
-        <div class="card"><div class="card-title">CSAT Trend (13 Weeks)</div><div class="spark" style="height:120px;"><div class="spark-bar" style="height:60%;background:#13EAC1;opacity:0.6;"></div><div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.65;"></div><div class="spark-bar" style="height:65%;background:#13EAC1;opacity:0.7;"></div><div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.75;"></div><div class="spark-bar" style="height:75%;background:#13EAC1;opacity:0.8;"></div><div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.85;"></div><div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.9;"></div><div class="spark-bar" style="height:93%;background:#13EAC1;opacity:1;"></div></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:#9ca3af;"><span>Week 1</span><span>Week 13</span></div></div>
+        <div class="card"><div class="card-title">CSAT by Product Line (Jan 2026)</div><div class="prod-row"><div class="prod-name">OnBase</div><div class="prod-track"><div class="prod-fill" style="width:88%;background:#13EAC1;"></div></div><div class="prod-score">4.4</div><div class="prod-n">n=523</div></div><div class="prod-row"><div class="prod-name">Perceptive</div><div class="prod-track"><div class="prod-fill" style="width:82%;background:#13EAC1;"></div></div><div class="prod-score">4.1</div><div class="prod-n">n=312</div></div><div class="prod-row"><div class="prod-name">Alfresco</div><div class="prod-track"><div class="prod-fill" style="width:78%;background:#13EAC1;"></div></div><div class="prod-score">3.9</div><div class="prod-n">n=287</div></div><div class="prod-row"><div class="prod-name">Nuxeo</div><div class="prod-track"><div class="prod-fill" style="width:80%;background:#13EAC1;"></div></div><div class="prod-score">4.0</div><div class="prod-n">n=198</div></div><div class="prod-row"><div class="prod-name">Brainware</div><div class="prod-track"><div class="prod-fill" style="width:86%;background:#13EAC1;"></div></div><div class="prod-score">4.3</div><div class="prod-n">n=156</div></div></div>
+        <div class="card"><div class="card-title">CSAT Trend (Oct 2025 - Jan 2026)</div><div class="spark" style="height:120px;"><div class="spark-bar" style="height:60%;background:#13EAC1;opacity:0.6;"></div><div class="spark-bar" style="height:70%;background:#13EAC1;opacity:0.65;"></div><div class="spark-bar" style="height:65%;background:#13EAC1;opacity:0.7;"></div><div class="spark-bar" style="height:80%;background:#13EAC1;opacity:0.75;"></div><div class="spark-bar" style="height:75%;background:#13EAC1;opacity:0.8;"></div><div class="spark-bar" style="height:90%;background:#13EAC1;opacity:0.85;"></div><div class="spark-bar" style="height:85%;background:#13EAC1;opacity:0.9;"></div><div class="spark-bar" style="height:93%;background:#13EAC1;opacity:1;"></div></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:#9ca3af;"><span>Oct 2025</span><span>Jan 2026</span></div></div>
     </div>
-    <div class="card"><div class="card-title">Voice of Customer - Top Themes</div><div class="voc-row"><div class="voc-item pos"><div class="voc-theme">Response Time</div><div class="voc-count">234</div><div class="voc-lbl">mentions</div></div><div class="voc-item pos"><div class="voc-theme">Knowledge</div><div class="voc-count">189</div><div class="voc-lbl">mentions</div></div><div class="voc-item neg"><div class="voc-theme">Documentation</div><div class="voc-count">156</div><div class="voc-lbl">mentions</div></div><div class="voc-item pos"><div class="voc-theme">Resolution</div><div class="voc-count">143</div><div class="voc-lbl">mentions</div></div><div class="voc-item neu"><div class="voc-theme">Communication</div><div class="voc-count">121</div><div class="voc-lbl">mentions</div></div></div></div>
+    <div class="card"><div class="card-title">Voice of Customer - Top Themes (Jan 2026)</div><div class="voc-row"><div class="voc-item pos"><div class="voc-theme">Response Time</div><div class="voc-count">234</div><div class="voc-lbl">mentions</div></div><div class="voc-item pos"><div class="voc-theme">Knowledge</div><div class="voc-count">189</div><div class="voc-lbl">mentions</div></div><div class="voc-item neg"><div class="voc-theme">Documentation</div><div class="voc-count">156</div><div class="voc-lbl">mentions</div></div><div class="voc-item pos"><div class="voc-theme">Resolution</div><div class="voc-count">143</div><div class="voc-lbl">mentions</div></div><div class="voc-item neu"><div class="voc-theme">Communication</div><div class="voc-count">121</div><div class="voc-lbl">mentions</div></div></div></div>
 </div>
 
 <!-- PAGE 3: OPERATIONAL EXCELLENCE -->
 <div class="page">
+    <div class="time-period">📅 Current Period: Jan 2026 | Comparison: Dec 2025</div>
+    
     <div class="kpi-row-4">
-        <div class="kpi purple"><div class="kpi-label">TTR</div><div class="kpi-value">46.45%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend down">↓ 5% vs LW</div></div>
-        <div class="kpi blue"><div class="kpi-label">TTFR</div><div class="kpi-value">32.99%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend up">↑ 12% vs LW</div></div>
-        <div class="kpi yellow"><div class="kpi-label">OPEN BACKLOG</div><div class="kpi-value">10K</div><div class="kpi-target">Target: &lt;8K</div><div class="kpi-trend down">↑ 3% vs LW</div></div>
-        <div class="kpi teal"><div class="kpi-label">% to Defect</div><div class="kpi-value">18%</div><div class="kpi-target">312 cases WoW</div><div class="kpi-trend up">↓ 2% vs LW</div></div>
+        <div class="kpi purple"><div class="kpi-label">TTR</div><div class="kpi-value">46.45%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend down">↓ 5% vs Dec</div></div>
+        <div class="kpi blue"><div class="kpi-label">TTFR</div><div class="kpi-value">32.99%</div><div class="kpi-target">Target: 80%</div><div class="kpi-trend up">↑ 12% vs Dec</div></div>
+        <div class="kpi yellow"><div class="kpi-label">OPEN BACKLOG</div><div class="kpi-value">10K</div><div class="kpi-target">Target: &lt;8K</div><div class="kpi-trend down">↑ 3% vs Dec</div></div>
+        <div class="kpi teal"><div class="kpi-label">% to Defect</div><div class="kpi-value">18%</div><div class="kpi-target">312 cases WoW</div><div class="kpi-trend up">↓ 2% vs Dec</div></div>
     </div>
     <div class="row-2">
-        <div class="card"><div class="card-title">Case Aging Distribution</div><div class="aging"><div class="aging-item"><div class="aging-val">3.1K</div><div class="aging-bar" style="height:100px;background:#13EAC1;"></div><div class="aging-lbl">0-7d</div></div><div class="aging-item"><div class="aging-val">2.1K</div><div class="aging-bar" style="height:68px;background:#52A1FF;"></div><div class="aging-lbl">8-14d</div></div><div class="aging-item"><div class="aging-val">1.8K</div><div class="aging-bar" style="height:58px;background:#F1CB61;"></div><div class="aging-lbl">15-30d</div></div><div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#A785FF;"></div><div class="aging-lbl">31-60d</div></div><div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#6E33FF;"></div><div class="aging-lbl">60+d</div></div></div></div>
-        <div class="card"><div class="card-title">TTFR by Severity</div><div class="ttfr-row"><div class="ttfr-name">Sev 1</div><div class="ttfr-track"><div class="ttfr-fill" style="width:55%;background:#EF4444;"></div></div><div class="ttfr-val" style="color:#991B1B;">55%</div></div><div class="ttfr-row"><div class="ttfr-name">Sev 2</div><div class="ttfr-track"><div class="ttfr-fill" style="width:50%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">50%</div></div><div class="ttfr-row"><div class="ttfr-name">Sev 3+</div><div class="ttfr-track"><div class="ttfr-fill" style="width:32%;background:#EF4444;"></div></div><div class="ttfr-val" style="color:#991B1B;">32%</div></div><div class="ttfr-note">*Targets: Sev1=90%, Sev2=80%, Sev3+=70%</div></div>
+        <div class="card">
+            <div class="card-title">Case Aging Distribution (Jan 2026)</div>
+            <div class="aging">
+                <div class="aging-item"><div class="aging-val">3.1K</div><div class="aging-bar" style="height:100px;background:#13EAC1;"></div><div class="aging-lbl">0-7d</div></div>
+                <div class="aging-item"><div class="aging-val">2.1K</div><div class="aging-bar" style="height:68px;background:#52A1FF;"></div><div class="aging-lbl">8-14d</div></div>
+                <div class="aging-item"><div class="aging-val">1.8K</div><div class="aging-bar" style="height:58px;background:#F1CB61;"></div><div class="aging-lbl">15-30d</div></div>
+                <div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#A785FF;"></div><div class="aging-lbl">31-60d</div></div>
+                <div class="aging-item"><div class="aging-val">1.5K</div><div class="aging-bar" style="height:48px;background:#6E33FF;"></div><div class="aging-lbl">60+d</div></div>
+            </div>
+        </div>
+        <div class="card"><div class="card-title">TTFR by Severity (Jan 2026)</div><div class="ttfr-row"><div class="ttfr-name">Sev 1</div><div class="ttfr-track"><div class="ttfr-fill" style="width:55%;background:#EF4444;"></div></div><div class="ttfr-val" style="color:#991B1B;">55%</div></div><div class="ttfr-row"><div class="ttfr-name">Sev 2</div><div class="ttfr-track"><div class="ttfr-fill" style="width:50%;background:#F1CB61;"></div></div><div class="ttfr-val" style="color:#92400E;">50%</div></div><div class="ttfr-row"><div class="ttfr-name">Sev 3+</div><div class="ttfr-track"><div class="ttfr-fill" style="width:32%;background:#EF4444;"></div></div><div class="ttfr-val" style="color:#991B1B;">32%</div></div><div class="ttfr-note">*Targets: Sev1=90%, Sev2=80%, Sev3+=70%</div></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">Escalations Breakdown (Jan 2026)</div>
+        <div class="esc-grid">
+            <div class="esc-item"><div class="esc-label">RFA Escalations</div><div class="esc-value">98</div><div class="esc-sub">Request for Assistance</div></div>
+            <div class="esc-item"><div class="esc-label">Manager Escalations</div><div class="esc-value">58</div><div class="esc-sub">Customer requested</div></div>
+            <div class="esc-item" style="background:#E0E7FF;"><div class="esc-label">Total Escalations</div><div class="esc-value" style="color:#6E33FF;">156</div><div class="esc-sub">↓ 8% vs Dec</div></div>
+        </div>
     </div>
 </div>
 
 <!-- PAGE 4: COST & EMERGING -->
 <div class="page">
+    <div class="time-period">📅 Current Period: Jan 2026 (Actual) | Forecast: Feb 2026+</div>
+    
     <div class="kpi-row-3">
-        <div class="kpi yellow"><div class="kpi-label">Cost per Case</div><div class="kpi-value">$228</div><div class="kpi-target">Target: $217</div><div class="kpi-trend down">↓ $11 to target</div></div>
-        <div class="kpi purple"><div class="kpi-label">Support Opex % of Billings</div><div class="kpi-value">2.7%</div><div class="kpi-target">Target: 2.7%</div><div class="kpi-trend up">✓ On target</div></div>
-        <div class="kpi blue"><div class="kpi-label">LCOL % of Headcount</div><div class="kpi-value">22%</div><div class="kpi-target">Target: 30%</div><div class="kpi-trend up">73% of goal</div></div>
+        <div class="kpi yellow"><div class="kpi-label">Cost per Case</div><div class="kpi-value">TBD</div><div class="kpi-target">Target: TBD</div><div class="kpi-trend">Awaiting Finance</div></div>
+        <div class="kpi purple"><div class="kpi-label">Support Cost % of Revenue</div><div class="kpi-value">2.37%</div><div class="kpi-target">Target: 2.7%</div><div class="kpi-trend up">✓ Under target</div></div>
+        <div class="kpi blue"><div class="kpi-label">LCOL % of Headcount</div><div class="kpi-value">23.87%</div><div class="kpi-target">Target: 30%</div><div class="kpi-trend up">↑ from 22%</div></div>
     </div>
     <div class="row-2">
-        <div class="card"><div class="card-title">Support Opex % Billings (Actual vs Forecast)</div><div class="chart-legend"><div class="legend-item"><div class="legend-line" style="background:#6E33FF;"></div><span>Actual</span></div><div class="legend-item"><div class="legend-line" style="background:repeating-linear-gradient(90deg, #6E33FF 0, #6E33FF 4px, transparent 4px, transparent 8px);"></div><span>Forecast</span></div></div><svg viewBox="0 0 700 180" style="width:100%;height:180px;"><line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6"/><line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6"/><line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6"/><line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6"/><text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">4%</text><text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">3%</text><text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">2%</text><text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">1%</text><line x1="50" y1="73" x2="680" y2="73" stroke="#10B981" stroke-width="2" stroke-dasharray="6,4"/><line x1="338" y1="15" x2="338" y2="145" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/><polyline points="62,93 114,88 166,78 218,83 270,86 338,93" fill="none" stroke="#6E33FF" stroke-width="3"/><polyline points="338,93 390,88 442,85 494,88 546,86 598,88 650,87" fill="none" stroke="#6E33FF" stroke-width="3" stroke-dasharray="8,5"/><circle cx="338" cy="93" r="5" fill="#6E33FF" stroke="white" stroke-width="2"/><text x="200" y="165" font-size="10" fill="#6b7280" text-anchor="middle">2025</text><text x="520" y="165" font-size="10" fill="#6b7280" text-anchor="middle">2026</text></svg></div>
-        <div class="card"><div class="card-title">LCOL % of Headcount (Actual vs Forecast)</div><div class="chart-legend"><div class="legend-item"><div class="legend-line" style="background:#52A1FF;"></div><span>Actual</span></div><div class="legend-item"><div class="legend-line" style="background:repeating-linear-gradient(90deg, #52A1FF 0, #52A1FF 4px, transparent 4px, transparent 8px);"></div><span>Forecast</span></div></div><svg viewBox="0 0 700 180" style="width:100%;height:180px;"><line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6"/><line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6"/><line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6"/><line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6"/><text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">40%</text><text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">30%</text><text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">20%</text><text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">10%</text><line x1="50" y1="60" x2="680" y2="60" stroke="#10B981" stroke-width="2" stroke-dasharray="6,4"/><line x1="338" y1="15" x2="338" y2="145" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/><polyline points="62,135 114,130 166,125 218,120 270,110 338,100" fill="none" stroke="#52A1FF" stroke-width="3"/><polyline points="338,100 390,92 442,84 494,76 546,70 598,64 650,60" fill="none" stroke="#52A1FF" stroke-width="3" stroke-dasharray="8,5"/><circle cx="338" cy="100" r="5" fill="#52A1FF" stroke="white" stroke-width="2"/><text x="200" y="165" font-size="10" fill="#6b7280" text-anchor="middle">2025</text><text x="520" y="165" font-size="10" fill="#6b7280" text-anchor="middle">2026</text></svg></div>
+        <div class="card"><div class="card-title">Support Cost % Revenue (Actual vs Forecast)</div><div class="chart-legend"><div class="legend-item"><div class="legend-line" style="background:#6E33FF;"></div><span>Actual</span></div><div class="legend-item"><div class="legend-line" style="background:repeating-linear-gradient(90deg, #6E33FF 0, #6E33FF 4px, transparent 4px, transparent 8px);"></div><span>Forecast</span></div></div><svg viewBox="0 0 700 180" style="width:100%;height:180px;"><line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6"/><line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6"/><line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6"/><line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6"/><text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">4%</text><text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">3%</text><text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">2%</text><text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">1%</text><line x1="50" y1="73" x2="680" y2="73" stroke="#10B981" stroke-width="2" stroke-dasharray="6,4"/><line x1="362" y1="15" x2="362" y2="145" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/><text x="362" y="158" font-size="9" fill="#191F5E" text-anchor="middle">Jan 26</text><polyline points="62,106 88,96 114,98 140,82 166,75 192,88 218,82 244,88 270,85 296,89 322,88 348,93 362,107" fill="none" stroke="#6E33FF" stroke-width="3"/><polyline points="362,107 390,96 416,93 442,88 468,91 494,95 520,91 546,92 572,93 598,95 624,94 650,94" fill="none" stroke="#6E33FF" stroke-width="3" stroke-dasharray="8,5"/><circle cx="362" cy="107" r="5" fill="#6E33FF" stroke="white" stroke-width="2"/><text x="150" y="172" font-size="10" fill="#6b7280" text-anchor="middle">2025</text><text x="520" y="172" font-size="10" fill="#6b7280" text-anchor="middle">2026</text></svg></div>
+        <div class="card"><div class="card-title">LCOL % of Headcount (Actual vs Forecast)</div><div class="chart-legend"><div class="legend-item"><div class="legend-line" style="background:#52A1FF;"></div><span>Actual</span></div><div class="legend-item"><div class="legend-line" style="background:repeating-linear-gradient(90deg, #52A1FF 0, #52A1FF 4px, transparent 4px, transparent 8px);"></div><span>Forecast</span></div></div><svg viewBox="0 0 700 180" style="width:100%;height:180px;"><line x1="50" y1="20" x2="680" y2="20" stroke="#f3f4f6"/><line x1="50" y1="60" x2="680" y2="60" stroke="#f3f4f6"/><line x1="50" y1="100" x2="680" y2="100" stroke="#f3f4f6"/><line x1="50" y1="140" x2="680" y2="140" stroke="#f3f4f6"/><text x="45" y="24" font-size="10" fill="#9ca3af" text-anchor="end">40%</text><text x="45" y="64" font-size="10" fill="#9ca3af" text-anchor="end">30%</text><text x="45" y="104" font-size="10" fill="#9ca3af" text-anchor="end">20%</text><text x="45" y="144" font-size="10" fill="#9ca3af" text-anchor="end">10%</text><line x1="50" y1="60" x2="680" y2="60" stroke="#10B981" stroke-width="2" stroke-dasharray="6,4"/><line x1="362" y1="15" x2="362" y2="145" stroke="#191F5E" stroke-width="2" stroke-dasharray="4,4"/><text x="362" y="158" font-size="9" fill="#191F5E" text-anchor="middle">Jan 26</text><polyline points="62,177 88,176 114,152 140,133 166,134 192,124 218,117 244,114 270,108 296,95 322,91 348,92 362,85" fill="none" stroke="#52A1FF" stroke-width="3"/><polyline points="362,85 390,84 416,80 442,78 468,76 494,75 520,73 546,72 572,70 598,69 624,68 650,68" fill="none" stroke="#52A1FF" stroke-width="3" stroke-dasharray="8,5"/><circle cx="362" cy="85" r="5" fill="#52A1FF" stroke="white" stroke-width="2"/><text x="150" y="172" font-size="10" fill="#6b7280" text-anchor="middle">2025</text><text x="520" y="172" font-size="10" fill="#6b7280" text-anchor="middle">2026</text></svg></div>
     </div>
     <div style="font-size:14px;font-weight:600;color:#191F5E;margin:24px 0 16px;">Emerging Metrics</div>
     <div class="row-2">
@@ -241,18 +280,136 @@
 
 <!-- PAGE 5: VSEM METRICS -->
 <div class="page">
-    <div class="pillar-section"><div class="pillar-header"><span class="pillar-badge ops">Operational Excellence</span></div><table class="metrics-table"><thead><tr><th>Measure</th><th>FY25</th><th>FY26 Target</th><th>Status</th></tr></thead><tbody><tr><td><strong>Time to First Response (TTFR)</strong></td><td></td><td></td><td></td></tr><tr><td class="metric-indent">Severity 1</td><td class="fy25">55%</td><td class="fy26">90%*</td><td><span class="status-bad">Off Track</span></td></tr><tr><td class="metric-indent">Severity 2</td><td class="fy25">50%</td><td class="fy26">80%</td><td><span class="status-bad">Off Track</span></td></tr><tr><td class="metric-indent">Severity 3+</td><td class="fy25">32%</td><td class="fy26">70%</td><td><span class="status-bad">Off Track</span></td></tr><tr><td><strong>Time to Close (TTC)</strong></td><td></td><td></td><td></td></tr><tr><td class="metric-indent">Severity 1</td><td class="fy25">77%</td><td class="fy26">90%*</td><td><span class="status-risk">At Risk</span></td></tr><tr><td class="metric-indent">Severity 2</td><td class="fy25">65%</td><td class="fy26">80%</td><td><span class="status-risk">At Risk</span></td></tr><tr><td class="metric-indent">Severity 3+</td><td class="fy25">28%</td><td class="fy26">70%</td><td><span class="status-bad">Off Track</span></td></tr></tbody></table></div>
+    <div class="time-period">📅 FY25: Jul 2024 - Jun 2025 | FY26: Jul 2025 - Jun 2026 | Current: Jan 2026</div>
+    
+    <!-- OPERATIONAL EXCELLENCE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge ops">Operational Excellence</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width:180px;">Measure</th>
+                    <th rowspan="2">FY25<br/>Actual</th>
+                    <th rowspan="2">Dec 2025</th>
+                    <th rowspan="2">↗️</th>
+                    <th rowspan="2">Jan 2026</th>
+                    <th colspan="4" class="quarter-header">FY26 Quarterly Targets</th>
+                    <th rowspan="2">FY26<br/>Goal</th>
+                    <th rowspan="2">Status</th>
+                </tr>
+                <tr>
+                    <th class="quarter-header">Q1</th>
+                    <th class="quarter-header">Q2</th>
+                    <th class="quarter-header">Q3</th>
+                    <th class="quarter-header">Q4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>TTFR (Time to First Response)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="metric-indent">Severity 1</td><td>55%</td><td>54%</td><td class="trend-up">↑</td><td>55%</td><td>60%</td><td>70%</td><td>80%</td><td>90%</td><td>90%</td><td><span class="status-red">Off Track</span></td></tr>
+                <tr><td class="metric-indent">Severity 2</td><td>50%</td><td>48%</td><td class="trend-up">↑</td><td>50%</td><td>55%</td><td>65%</td><td>75%</td><td>80%</td><td>80%</td><td><span class="status-red">Off Track</span></td></tr>
+                <tr><td class="metric-indent">Severity 3+</td><td>32%</td><td>30%</td><td class="trend-up">↑</td><td>32%</td><td>40%</td><td>50%</td><td>60%</td><td>70%</td><td>70%</td><td><span class="status-red">Off Track</span></td></tr>
+                <tr><td><strong>TTC (Time to Close)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="metric-indent">Severity 1</td><td>77%</td><td>75%</td><td class="trend-up">↑</td><td>77%</td><td>80%</td><td>85%</td><td>88%</td><td>90%</td><td>90%</td><td><span class="status-yellow">At Risk</span></td></tr>
+                <tr><td class="metric-indent">Severity 2</td><td>65%</td><td>63%</td><td class="trend-up">↑</td><td>65%</td><td>70%</td><td>75%</td><td>78%</td><td>80%</td><td>80%</td><td><span class="status-yellow">At Risk</span></td></tr>
+                <tr><td class="metric-indent">Severity 3+</td><td>28%</td><td>26%</td><td class="trend-up">↑</td><td>28%</td><td>40%</td><td>50%</td><td>60%</td><td>70%</td><td>70%</td><td><span class="status-red">Off Track</span></td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div class="pillar-section"><div class="pillar-header"><span class="pillar-badge cx">Customer Experience</span></div><table class="metrics-table"><thead><tr><th>Measure</th><th>FY25</th><th>FY26 Target</th><th>Status</th></tr></thead><tbody><tr><td>Customer Satisfaction (starting April 2025)</td><td class="fy25">92.9%</td><td class="fy26">95%/90%</td><td><span class="status-good">On Track</span></td></tr></tbody></table></div>
+    <!-- CUSTOMER EXPERIENCE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge cx">Customer Experience</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Measure</th>
+                    <th>FY25<br/>Actual</th>
+                    <th>Dec 2025</th>
+                    <th>↗️</th>
+                    <th>Jan 2026</th>
+                    <th>Q1</th>
+                    <th>Q2</th>
+                    <th>Q3</th>
+                    <th>Q4</th>
+                    <th>FY26<br/>Goal</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Customer Satisfaction (CSAT)</td><td>92.9%</td><td>91.5%</td><td class="trend-up">↑</td><td>92.9%</td><td>92%</td><td>93%</td><td>94%</td><td>95%</td><td>95%/90%</td><td><span class="status-green">On Track</span></td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div class="pillar-section"><div class="pillar-header"><span class="pillar-badge arch">Scaled Architecture</span></div><table class="metrics-table"><thead><tr><th>Measure</th><th>FY25</th><th>FY26 Target</th><th>Status</th></tr></thead><tbody><tr><td>KB Articles Published through KCS</td><td class="fy25">3%</td><td class="fy26">6%</td><td><span class="status-risk">At Risk</span></td></tr><tr><td>Training (Shrink Target)</td><td class="fy25">&lt;1%</td><td class="fy26">&gt;5%</td><td><span class="status-bad">Off Track</span></td></tr></tbody></table></div>
+    <!-- SCALED ARCHITECTURE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge arch">Scaled Architecture</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Measure</th>
+                    <th>FY25<br/>Actual</th>
+                    <th>Dec 2025</th>
+                    <th>↗️</th>
+                    <th>Jan 2026</th>
+                    <th>Q1</th>
+                    <th>Q2</th>
+                    <th>Q3</th>
+                    <th>Q4</th>
+                    <th>FY26<br/>Goal</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>KB Articles via KCS</td><td>3%</td><td>3.2%</td><td class="trend-up">↑</td><td>3.5%</td><td>4%</td><td>4.5%</td><td>5%</td><td>6%</td><td>6%</td><td><span class="status-yellow">At Risk</span></td></tr>
+                <tr><td>Training (Shrink Target)</td><td>&lt;1%</td><td>1.2%</td><td class="trend-up">↑</td><td>1.5%</td><td>2%</td><td>3%</td><td>4%</td><td>5%</td><td>&gt;5%</td><td><span class="status-red">Off Track</span></td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div class="pillar-section"><div class="pillar-header"><span class="pillar-badge finance">Financial Outcomes</span></div><table class="metrics-table"><thead><tr><th>Measure</th><th>FY25</th><th>FY26 Target</th><th>Status</th></tr></thead><tbody><tr><td>Support Opex as % of Billings</td><td class="fy25">2.7%</td><td class="fy26">2.7%</td><td><span class="status-good">On Track</span></td></tr><tr><td>Cost-per-Case (CPC)</td><td class="fy25">$228</td><td class="fy26">$217</td><td><span class="status-risk">At Risk</span></td></tr><tr><td>LCOL % of Headcount</td><td class="fy25">22%</td><td class="fy26">30%</td><td><span class="status-risk">At Risk</span></td></tr></tbody></table></div>
+    <!-- FINANCIAL OUTCOMES -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge finance">Financial Outcomes</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Measure</th>
+                    <th>FY25<br/>Actual</th>
+                    <th>Dec 2025</th>
+                    <th>↗️</th>
+                    <th>Jan 2026</th>
+                    <th>Q1</th>
+                    <th>Q2</th>
+                    <th>Q3</th>
+                    <th>Q4</th>
+                    <th>FY26<br/>Goal</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Support Cost % of Revenue</td><td>2.7%</td><td>2.68%</td><td class="trend-up">↓</td><td>2.37%</td><td>2.7%</td><td>2.7%</td><td>2.7%</td><td>2.7%</td><td>2.7%</td><td><span class="status-green">On Track</span></td></tr>
+                <tr><td>Cost-per-Case (CPC)</td><td>TBD</td><td>$740</td><td class="trend-flat">—</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td><td><span class="status-yellow">Pending</span></td></tr>
+                <tr><td>LCOL % of Headcount</td><td>22%</td><td>22.02%</td><td class="trend-up">↑</td><td>23.87%</td><td>24%</td><td>26%</td><td>28%</td><td>30%</td><td>30%</td><td><span class="status-yellow">At Risk</span></td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div style="font-size:11px;color:#9ca3af;margin-top:16px;">*TTFR/TTC SL Timing Targets TBD; currently 30 min/48 hrs respectively</div>
+    <div style="margin-top:24px; padding:16px; background:white; border-radius:8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+        <div style="font-size:12px; font-weight:600; color:#191F5E; margin-bottom:12px;">RAG Status Criteria (Based on FY26 Goal)</div>
+        <div style="display:flex; gap:24px; font-size:11px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-green">On Track</span> ≥80% of FY26 Goal</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-yellow">At Risk</span> 50-79% of FY26 Goal</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-red">Off Track</span> &lt;50% of FY26 Goal</div>
+        </div>
+    </div>
+    <div style="font-size:11px;color:#9ca3af;margin-top:16px;">
+        *TTFR/TTC SL Timing Targets TBD; currently 30 min/48 hrs respectively<br/>
+        *Cost-per-Case target pending Finance confirmation based on Support Opex % of Billings
+    </div>
 </div>
 
-<footer class="footer"><div>Data Source: Salesforce, Adaptive</div><div>Due: Jan 23, 2026 | Owner: D&I Team</div></footer>
+<footer class="footer"><div>Data Source: Salesforce, Adaptive</div><div>Last Refresh: Jan 2026 | Owner: D&I Team</div></footer>
 
 <script>
 function showPage(n) {
