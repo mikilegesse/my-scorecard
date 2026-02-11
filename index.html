@@ -1,4 +1,4 @@
-I<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -113,7 +113,7 @@ I<!DOCTYPE html>
         .esc-value { font-size: 28px; font-weight: bold; color: #191F5E; }
         .esc-sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
         
-        /* VSEM Styless */
+        /* VSEM Styles */
         .pillar-section { margin-bottom: 24px; }
         .pillar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .pillar-badge { padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; color: white; }
@@ -150,7 +150,7 @@ I<!DOCTYPE html>
 <header class="header">
     <div style="display:flex;align-items:center;">
         <h1>TS Scorecard</h1>
-        <span class="badge">v2.0 DRAFT</span>
+        <span class="badge">DRAFT</span>
     </div>
     <span>Data as of: Jan 2026 | FY26 Targets</span>
 </header>
@@ -161,9 +161,10 @@ I<!DOCTYPE html>
     <button class="tab" onclick="showPage(2)">Operational Excellence</button>
     <button class="tab" onclick="showPage(3)">Cost & Emerging</button>
     <button class="tab" onclick="showPage(4)">VSEM Metrics</button>
+    <button class="tab" onclick="showPage(5)">VSEM Metrics v2</button>
 </nav>
 
-<!-- PAGE 1: EXECUTIVE OERVIEW -->
+<!-- PAGE 1: EXECUTIVE OVERVIEW -->
 <div class="page active">
     <div class="time-period">📅 Current Period: Jan 2026 | Comparison: Dec 2025</div>
     
@@ -278,9 +279,10 @@ I<!DOCTYPE html>
     </div>
 </div>
 
-<!-- PAGE 5: VSEM METRICS -->
+<!-- PAGE 5: VSEM METRICS (Original) -->
 <div class="page">
     <div class="time-period">📅 FY25: Jul 2024 - Jun 2025 | FY26: Jul 2025 - Jun 2026 | Current: Jan 2026</div>
+    <p style="font-size:12px; color:#6b7280; margin-bottom:16px;"><em>PBI Implementation: Matrix visual with Measure as rows, time periods as columns. Conditional formatting for Status column.</em></p>
     
     <!-- OPERATIONAL EXCELLENCE -->
     <div class="pillar-section">
@@ -406,6 +408,132 @@ I<!DOCTYPE html>
     <div style="font-size:11px;color:#9ca3af;margin-top:16px;">
         *TTFR/TTC SL Timing Targets TBD; currently 30 min/48 hrs respectively<br/>
         *Cost-per-Case target pending Finance confirmation based on Support Opex % of Billings
+    </div>
+</div>
+
+<!-- PAGE 6: VSEM METRICS v2 -->
+<div class="page">
+    <div class="time-period">📅 FY25: Jul 2024 - Jun 2025 | FY26: Jul 2025 - Jun 2026 | Current: Q1 FY26</div>
+    <p style="font-size:12px; color:#6b7280; margin-bottom:16px;"><em>PBI Implementation: Matrix visual with Metric as rows, columns as shown. Use conditional formatting for Status. YTD calculated via DAX TOTALYTD().</em></p>
+    
+    <!-- OPERATIONAL EXCELLENCE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge ops">Operational Excellence</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Metric</th>
+                    <th>Q1 FY26</th>
+                    <th>Q2 FY26</th>
+                    <th>Q3 FY26</th>
+                    <th>Q4 FY26</th>
+                    <th>YTD FY26</th>
+                    <th>Goal FY26</th>
+                    <th>Actual FY25</th>
+                    <th>Benchmark</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>TTFR (Time to First Response)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="metric-indent">Severity 1</td><td>55%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>55%</td><td>90%</td><td>55%</td><td>85%</td><td><span class="status-red">Red</span></td></tr>
+                <tr><td class="metric-indent">Severity 2</td><td>50%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>50%</td><td>80%</td><td>50%</td><td>75%</td><td><span class="status-red">Red</span></td></tr>
+                <tr><td class="metric-indent">Severity 3+</td><td>32%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>32%</td><td>70%</td><td>32%</td><td>65%</td><td><span class="status-red">Red</span></td></tr>
+                <tr><td><strong>TTC (Time to Close)</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="metric-indent">Severity 1</td><td>77%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>77%</td><td>90%</td><td>77%</td><td>85%</td><td><span class="status-yellow">Yellow</span></td></tr>
+                <tr><td class="metric-indent">Severity 2</td><td>65%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>65%</td><td>80%</td><td>65%</td><td>75%</td><td><span class="status-yellow">Yellow</span></td></tr>
+                <tr><td class="metric-indent">Severity 3+</td><td>28%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>28%</td><td>70%</td><td>28%</td><td>60%</td><td><span class="status-red">Red</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CUSTOMER EXPERIENCE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge cx">Customer Experience</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Metric</th>
+                    <th>Q1 FY26</th>
+                    <th>Q2 FY26</th>
+                    <th>Q3 FY26</th>
+                    <th>Q4 FY26</th>
+                    <th>YTD FY26</th>
+                    <th>Goal FY26</th>
+                    <th>Actual FY25</th>
+                    <th>Benchmark</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Customer Satisfaction (CSAT)</td><td>92.9%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>92.9%</td><td>95%</td><td>92.9%</td><td>90%</td><td><span class="status-green">Green</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SCALED ARCHITECTURE -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge arch">Scaled Architecture</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Metric</th>
+                    <th>Q1 FY26</th>
+                    <th>Q2 FY26</th>
+                    <th>Q3 FY26</th>
+                    <th>Q4 FY26</th>
+                    <th>YTD FY26</th>
+                    <th>Goal FY26</th>
+                    <th>Actual FY25</th>
+                    <th>Benchmark</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>KB Articles via KCS</td><td>3.5%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>3.5%</td><td>6%</td><td>3%</td><td>5%</td><td><span class="status-yellow">Yellow</span></td></tr>
+                <tr><td>Training (Shrink Target)</td><td>1.5%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>1.5%</td><td>&gt;5%</td><td>&lt;1%</td><td>5%</td><td><span class="status-red">Red</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FINANCIAL OUTCOMES -->
+    <div class="pillar-section">
+        <div class="pillar-header"><span class="pillar-badge finance">Financial Outcomes</span></div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Metric</th>
+                    <th>Q1 FY26</th>
+                    <th>Q2 FY26</th>
+                    <th>Q3 FY26</th>
+                    <th>Q4 FY26</th>
+                    <th>YTD FY26</th>
+                    <th>Goal FY26</th>
+                    <th>Actual FY25</th>
+                    <th>Benchmark</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Support Cost % of Revenue</td><td>2.37%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>2.37%</td><td>2.7%</td><td>2.7%</td><td>3.0%</td><td><span class="status-green">Green</span></td></tr>
+                <tr><td>Cost-per-Case (CPC)</td><td>TBD</td><td>N/A</td><td>N/A</td><td>N/A</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td><td><span class="status-yellow">Pending</span></td></tr>
+                <tr><td>LCOL % of Headcount</td><td>23.87%</td><td>N/A</td><td>N/A</td><td>N/A</td><td>23.87%</td><td>30%</td><td>22%</td><td>40%</td><td><span class="status-yellow">Yellow</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top:24px; padding:16px; background:white; border-radius:8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+        <div style="font-size:12px; font-weight:600; color:#191F5E; margin-bottom:12px;">RAG Status Criteria (Based on FY26 Goal)</div>
+        <div style="display:flex; gap:24px; font-size:11px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-green">Green</span> ≥80% of FY26 Goal</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-yellow">Yellow</span> 50-79% of FY26 Goal</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span class="status-red">Red</span> &lt;50% of FY26 Goal</div>
+        </div>
+    </div>
+    <div style="font-size:11px;color:#9ca3af;margin-top:16px;">
+        *TTFR/TTC SL Timing Targets TBD; currently 30 min/48 hrs respectively<br/>
+        *Cost-per-Case target pending Finance confirmation based on Support Opex % of Billings<br/>
+        *Benchmark = Industry standard or internal target
     </div>
 </div>
 
